@@ -1,157 +1,133 @@
 let currentUser = JSON.parse(localStorage.getItem('mindspace_user')) || null;
-let moods = JSON.parse(localStorage.getItem('mindspace_moods')) || [];
+let moodsData = JSON.parse(localStorage.getItem('mindspace_moods')) || [];
 let appointments = JSON.parse(localStorage.getItem('mindspace_appointments')) || [];
+let verificationCode = '';
+
 const therapistOptions = [
   { name: 'Dr. Aisha Mwangi', pic: 'https://images.pexels.com/photos/6646919/pexels-photo-6646919.jpeg' },
   { name: 'Dr. Juma Otieno', pic: 'https://images.pexels.com/photos/5691717/pexels-photo-5691717.jpeg' },
   { name: 'Dr. Fatuma Ali', pic: 'https://images.pexels.com/photos/7746658/pexels-photo-7746658.jpeg' }
 ];
 
-function openModal(modalId) { document.getElementById(modalId).style.display = 'block'; }
-function closeModal(modalId) { document.getElementById(modalId).style.display = 'none'; }
-
 document.addEventListener('DOMContentLoaded', () => {
-  // Nav triggers
-  document.getElementById('loginBtn')?.addEventListener('click', (e) => { e.preventDefault(); openModal('loginModal'); });
-  document.getElementById('signupBtn')?.addEventListener('click', (e) => { e.preventDefault(); openModal('signupModal'); });
+  const path = window.location.pathname.split('/').pop();
 
-  // Login form (BetterHelp style with validation/loading)
+  if (path === 'dashboard.html') {
+    if (!currentUser) return window.location.href = 'login.html';
+    loadDashboard();
+  }
+
+  // Login
   const loginForm = document.getElementById('loginForm');
   if (loginForm) {
-    loginForm.addEventListener('submit', (e) => {
+    loginForm.addEventListener('submit', e => {
       e.preventDefault();
-      const email = document.getElementById('loginEmail').value.trim();
-      const password = document.getElementById('loginPassword').value;
-      const submitBtn = document.querySelector('.login-btn');
-      const btnText = submitBtn.querySelector('.btn-text');
-      const loading = submitBtn.querySelector('.loading');
-      const emailError = document.getElementById('emailError');
-      const passwordError = document.getElementById('passwordError');
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const btn = loginForm.querySelector('.login-btn');
+      const btnText = btn.querySelector('.btn-text');
+      const loading = btn.querySelector('.loading');
 
-      // Validation
-      if (!email || !/\S+@\S+\.\S+/.test(email)) {
-        emailError.classList.remove('hidden');
-        return;
-      }
-      if (password.length < 6) {
-        passwordError.classList.remove('hidden');
-        return;
-      }
-      emailError.classList.add('hidden');
-      passwordError.classList.add('hidden');
+      const users = JSON.parse(localStorage.getItem('mindspace_users') || '[]');
+      const user = users.find(u => u.email === email && u.password === password);
 
-      // Loading
-      submitBtn.disabled = true;
-      btnText.classList.add('hidden');
-      loading.classList.remove('hidden');
-
-      // Simulate API (1s delay)
-      setTimeout(() => {
-        const storedUser = JSON.parse(localStorage.getItem('mindspace_user'));
-        if (storedUser && storedUser.email === email) {
-          alert('Login successful! Welcome back.');
-          closeModal('loginModal');
-          window.location.href = 'dashboard.html';
-        } else {
-          alert('Invalid credentials. Try signing up.');
-        }
-        submitBtn.disabled = false;
-        btnText.classList.remove('hidden');
-        loading.classList.add('hidden');
-      }, 1500);
-    });
-  }
-
-  // Signup form
-  const signupForm = document.getElementById('signupForm');
-  if (signupForm) {
-    signupForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const name = document.getElementById('signupName').value.trim();
-      const email = document.getElementById('signupEmail').value.trim();
-      const password = document.getElementById('signupPassword').value;
-      if (name && email && password.length >= 6) {
-        currentUser = { name, email };
-        localStorage.setItem('mindspace_user', JSON.stringify(currentUser));
-        closeModal('signupModal');
-        alert(`Welcome, ${name}! Redirecting to dashboard.`);
+      if (user) {
+        localStorage.setItem('mindspace_user', JSON.stringify({ name: user.name, email: user.email }));
+        alert('Welcome back, ' + user.name + '!');
         window.location.href = 'dashboard.html';
       } else {
-        alert('Please fill all fields correctly.');
+        alert('Invalid email or password.');
       }
     });
   }
 
-  // Dashboard load
-  if (window.location.pathname.includes('dashboard.html')) {
-    if (!currentUser) window.location.href = 'index.html';
-    else loadDashboard();
-  }
+  // Signup
+  const signupForm = document.getElementById('signupForm');
+  if (signupForm) {
+    const sendCodeBtn = document.getElementById('sendCodeBtn');
+    sendCodeBtn.addEventListener('click', () => {
+      const email = document.getElementById('signupEmail').value.trim();
+      if (!email || !/\S+@\S+\.\S+/.test(email)) return alert('Enter valid email');
+      verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
+      console.log(`%cCODE: ${verificationCode}`, 'background:#10b981;color:white;font-size:18px;padding:10px');
+      alert('Code sent! Check browser console (F12)');
+      sendCodeBtn.disabled = true;
+      sendCodeBtn.textContent = 'Sent!';
+      document.getElementById('verificationCode').disabled = false;
+      document.getElementById('codeSent').classList.remove('hidden');
+    });
 
-  // Outside click to close modals
-  window.onclick = (e) => {
-    if (e.target.classList.contains('modal')) closeModal(e.target.id);
-  };
+    signupForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('signupEmail').value.trim();
+      const password = document.getElementById('signupPassword').value;
+      const confirm = document.getElementById('confirmPassword').value;
+      const code = document.getElementById('verificationCode').value;
+
+      if (password !== confirm) return alert('Passwords do not match');
+      if (code !== verificationCode) return alert('Wrong verification code');
+
+      let users = JSON.parse(localStorage.getItem('mindspace_users') || '[]');
+      if (users.some(u => u.email === email)) return alert('Email already registered');
+
+      users.push({ name, email, password });
+      localStorage.setItem('mindspace_users', JSON.stringify(users));
+      localStorage.setItem('mindspace_user', JSON.stringify({ name, email }));
+      alert('Account created! Welcome ' + name);
+      window.location.href = 'dashboard.html';
+    });
+  }
 });
 
 function loadDashboard() {
   document.getElementById('userName').textContent = currentUser.name;
   document.getElementById('profileName').textContent = currentUser.name;
   document.getElementById('profileEmail').textContent = currentUser.email;
+  document.getElementById('profilePic').src = localStorage.getItem('profile_pic') || 'https://images.pexels.com/photos/6646919/pexels-photo-6646919.jpeg';
 
-  // Random therapist
   const therapist = therapistOptions[Math.floor(Math.random() * therapistOptions.length)];
   document.getElementById('therapistName').textContent = therapist.name;
   document.getElementById('therapistPic').src = therapist.pic;
 
-  // Profile pic from storage
-  document.getElementById('profilePic').src = localStorage.getItem('profile_pic') || 'https://images.pexels.com/photos/6646919/pexels-photo-6646919.jpeg';
-
   loadAppointments();
   renderChart();
+  if (localStorage.getItem('premium_user') === 'true') {
+    document.querySelector('.greeting h1').innerHTML += ' <span style="background:#10b981;color:white;padding:4px 12px;border-radius:20px;font-size:0.5em;">PREMIUM</span>';
+  }
 }
 
 function changeProfilePic() {
-  const pics = [
-    'https://images.pexels.com/photos/6646919/pexels-photo-6646919.jpeg',
-    'https://images.pexels.com/photos/5691717/pexels-photo-5691717.jpeg',
-    'https://images.pexels.com/photos/7746658/pexels-photo-7746658.jpeg'
-  ];
+  const pics = ['https://images.pexels.com/photos/6646919/pexels-photo-6646919.jpeg', 'https://images.pexels.com/photos/5691717/pexels-photo-5691717.jpeg', 'https://images.pexels.com/photos/7746658/pexels-photo-7746658.jpeg'];
   const newPic = pics[Math.floor(Math.random() * pics.length)];
   document.getElementById('profilePic').src = newPic;
   localStorage.setItem('profile_pic', newPic);
-  alert('Profile picture updated!');
 }
 
-function bookAppointment() { addAppointment(); }
 function addAppointment() {
   const date = prompt('Enter date (YYYY-MM-DD):');
   if (date && !isNaN(Date.parse(date))) {
     appointments.push({ date, therapist: document.getElementById('therapistName').textContent });
     localStorage.setItem('mindspace_appointments', JSON.stringify(appointments));
     loadAppointments();
-    alert('Appointment added!');
-  } else {
-    alert('Invalid date. Use YYYY-MM-DD format.');
   }
 }
+
 function loadAppointments() {
   const list = document.getElementById('appointmentList');
-  list.innerHTML = appointments.map(apt => `<li>${apt.date} with ${apt.therapist}</li>`).join('') || '<li>No appointments yet. Add one!</li>';
+  list.innerHTML = appointments.map(a => `<li>${a.date} with ${a.therapist}</li>`).join('') || '<li>No appointments yet</li>';
 }
 
 function logMood() {
-  const moods = ['happy', 'calm', 'okay', 'sad', 'anxious'];
-  const mood = prompt('How are you feeling? (' + moods.join('/') + ')');
-  if (moods.includes(mood)) {
-    moodsData.push({ mood, value: {happy:5,calm:4,okay:3,sad:2,anxious:1}[mood], date: new Date().toISOString().split('T')[0] });
+  const mood = prompt('How are you feeling? (happy/calm/okay/sad/anxious)');
+  const values = {happy:5, calm:4, okay:3, sad:2, anxious:1};
+  if (values[mood]) {
+    moodsData.push({ mood, value: values[mood], date: new Date().toISOString().split('T')[0] });
     localStorage.setItem('mindspace_moods', JSON.stringify(moodsData));
     renderChart();
-    alert('Mood logged! Great job tracking.');
   }
 }
 
-let moodsData = moods; // Global for chart
 function renderChart() {
   const ctx = document.getElementById('moodChart')?.getContext('2d');
   if (ctx && moodsData.length > 0) {
@@ -159,44 +135,61 @@ function renderChart() {
       type: 'line',
       data: {
         labels: moodsData.slice(-7).map(m => m.date.slice(5,10)),
-        datasets: [{
-          label: 'Mood Level',
-          data: moodsData.slice(-7).map(m => m.value),
-          borderColor: '#059669',
-          backgroundColor: 'rgba(5, 150, 105, 0.2)',
-          tension: 0.4,
-          fill: true
-        }]
+        datasets: [{ label: 'Mood', data: moodsData.slice(-7).map(m => m.value), borderColor: '#059669', backgroundColor: 'rgba(5,150,105,0.2)', tension: 0.4, fill: true }]
       },
       options: { scales: { y: { min: 0, max: 5 } } }
     });
   }
 }
 
-function writeJournal() {
-  const entry = prompt('Write your journal entry...');
-  if (entry) alert('Entry saved privately.');
+function openChat() {
+  document.getElementById('chatModal').style.display = 'flex';
+  document.getElementById('chatTherapistName').textContent = document.getElementById('therapistName').textContent;
+  document.getElementById('chatTherapistPic').src = document.getElementById('therapistPic').src;
+  loadChat();
 }
 
-function breathingExercise() {
-  alert('Guided Breathing: Inhale 4s, Hold 4s, Exhale 6s. Repeat 5 times. You got this!');
+function closeChat() { document.getElementById('chatModal').style.display = 'none'; }
+
+function sendMessage() {
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim();
+  if (!msg) return;
+  const messages = JSON.parse(localStorage.getItem('chat_messages') || '[]');
+  messages.push({ text: msg, from: 'user', time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) });
+  localStorage.setItem('chat_messages', JSON.stringify(messages));
+  input.value = '';
+  loadChat();
+
+  setTimeout(() => {
+    const replies = ["I'm here for you.", "That sounds tough.", "You're not alone.", "How does that make you feel?", "You've got this."];
+    messages.push({ text: replies[Math.floor(Math.random() * replies.length)], from: 'therapist', time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) });
+    localStorage.setItem('chat_messages', JSON.stringify(messages));
+    loadChat();
+  }, 2000);
 }
 
-function forgotPassword(e) {
-  e.preventDefault();
-  const email = prompt('Enter email for reset:');
-  if (email) alert(`Reset link sent to ${email}. Check your inbox!`);
+function loadChat() {
+  const container = document.getElementById('chatMessages');
+  const messages = JSON.parse(localStorage.getItem('chat_messages') || '[]');
+  container.innerHTML = messages.map(m => `<div class="message ${m.from}"><small>${m.time}</small><br>${m.text}</div>`).join('');
+  container.scrollTop = container.scrollHeight;
 }
 
-function toggleToSignup(e) {
-  e.preventDefault();
-  closeModal('loginModal');
-  openModal('signupModal');
+function payWithMpesa() {
+  const phone = prompt('Enter M-PESA number (07xxxxxxxx):');
+  if (!/^07\d{8}$/.test(phone)) return alert('Invalid number');
+  alert('Sending STK Push...');
+  setTimeout(() => {
+    if (confirm('Complete payment on phone?')) {
+      localStorage.setItem('premium_user', 'true');
+      alert('Payment successful! You\'re now Premium!');
+      location.reload();
+    }
+  }, 8000);
 }
 
-function logout() {
-  if (confirm('Log out?')) {
-    localStorage.clear();
-    window.location.href = 'index.html';
-  }
-}
+function writeJournal() { const entry = prompt('Write your journal...'); if (entry) alert('Saved privately'); }
+function breathingExercise() { alert('Inhale 4s → Hold 4s → Exhale 6s. Repeat 5 times.'); }
+function forgotPassword(e) { e.preventDefault(); alert('Check your email for reset link'); }
+function logout() { if (confirm('Log out?')) { localStorage.removeItem('mindspace_user'); window.location.href = 'index.html'; } }
