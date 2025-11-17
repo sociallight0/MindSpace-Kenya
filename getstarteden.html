@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Get Started - MindSpace Kenya</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Enhanced Visibility for Big Buttons */
+    .big-options {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.2rem;
+      margin: 3rem 0;
+    }
+
+    .option-btn {
+      padding: 24px 20px;
+      font-size: 1.4rem !important;
+      font-weight: 600;
+      background: #f1f5f9;
+      color: #1e293b;
+      border: 3px solid #e2e8f0;
+      border-radius: 18px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+
+    .option-btn:hover {
+      background: #ecfdf5;
+      border-color: #10b981;
+      transform: translateY(-4px);
+      box-shadow: 0 10px 25px rgba(16, 185, 129, 0.15);
+    }
+
+    .option-btn.selected {
+      background: #10b981 !important;
+      color: white !important;
+      border-color: #10b981 !important;
+      box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+    }
+
+    .option-btn:active {
+      transform: translateY(-2px);
+    }
+
+    /* Make text stand out */
+    .question-card h1 {
+      font-size: 2.8rem !important;
+      color: #064e3b;
+      margin-bottom: 1rem;
+    }
+
+    .subtitle {
+      font-size: 1.35rem !important;
+      color: #475569;
+      font-weight: 500;
+    }
+
+    .big-input {
+      font-size: 1.3rem !important;
+      padding: 20px !important;
+    }
+
+    .primary-btn {
+      font-size: 1.3rem !important;
+      padding: 18px 40px !important;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body class="getstarted-page">
+
+  <header class="simple-header">
+    <div class="container">
+      <div class="logo">MindSpace Kenya</div>
+      <a href="login.html" class="text-link">Already have an account? Log in</a>
+    </div>
+  </header>
+
+  <main class="getstarted-container">
+    <div class="progress-container">
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <p><span id="currentStep">1</span> of 6</p>
+    </div>
+
+    <div class="question-card">
+      <!-- STEP 1: Name -->
+      <div id="step1" class="step active">
+        <h1>Let's find the right therapist for you</h1>
+        <p class="subtitle">First, what should we call you?</p>
+        <input type="text" id="userNameInput" placeholder="e.g. Aisha Mwangi" class="big-input" autofocus>
+        <button onclick="saveNameAndNext()" class="primary-btn">Continue</button>
+      </div>
+
+      <!-- STEP 2: Concerns -->
+      <div id="step2" class="step">
+        <h1>What's bringing you here today?</h1>
+        <p class="subtitle">Select all that apply</p>
+        <div class="options-grid">
+          <label><input type="checkbox" value="Stress & Anxiety"> Stress & Anxiety</label>
+          <label><input type="checkbox" value="Depression"> Depression</label>
+          <label><input type="checkbox" value="Relationships"> Relationships</label>
+          <label><input type="checkbox" value="Family Conflict"> Family Conflict</label>
+          <label><input type="checkbox" value="Grief"> Grief & Loss</label>
+          <label><input type="checkbox" value="Trauma"> Trauma</label>
+          <label><input type="checkbox" value="Self-esteem"> Self-esteem</label>
+          <label><input type="checkbox" value="Work Stress"> Work Stress</label>
+        </div>
+        <button onclick="nextStep(3)" class="primary-btn">Continue</button>
+      </div>
+
+      <!-- STEP 3: Therapy Before (NOW SUPER VISIBLE) -->
+      <div id="step3" class="step">
+        <h1>Have you ever attended therapy before?</h1>
+        <p class="subtitle">This helps us match you better</p>
+        <div class="big-options">
+          <button onclick="selectOption(this); setAnswer('therapyBefore', 'Yes'); nextStep(4)" class="option-btn">Yes</button>
+          <button onclick="selectOption(this); setAnswer('therapyBefore', 'No'); nextStep(4)" class="option-btn">No</button>
+          <button onclick="selectOption(this); setAnswer('therapyBefore', 'Not sure'); nextStep(4)" class="option-btn">Not sure</button>
+        </div>
+      </div>
+
+      <!-- STEP 4: Gender (NOW SUPER VISIBLE) -->
+      <div id="step4" class="step">
+        <h1>Which describes you best?</h1>
+        <p class="subtitle">We respect all identities</p>
+        <div class="big-options">
+          <button onclick="selectOption(this); setAnswer('gender', 'Male'); nextStep(5)" class="option-btn">Male</button>
+          <button onclick="selectOption(this); setAnswer('gender', 'Female'); nextStep(5)" class="option-btn">Female</button>
+          <button onclick="selectOption(this); setAnswer('gender', 'Non-binary'); nextStep(5)" class="option-btn">Non-binary</button>
+          <button onclick="selectOption(this); setAnswer('gender', 'Prefer not to say'); nextStep(5)" class="option-btn">Prefer not to say</button>
+        </div>
+      </div>
+
+      <!-- STEP 5: Phone -->
+      <div id="step5" class="step">
+        <h1>What's your phone number?</h1>
+        <p class="subtitle">We’ll send a confirmation code (Kenya only)</p>
+        <input type="tel" id="phoneInput" placeholder="0712345678" class="big-input" maxlength="10">
+        <button onclick="nextStep(6)" class="primary-btn">Send Code</button>
+      </div>
+
+      <!-- STEP 6: Password -->
+      <div id="step6" class="step">
+        <h1>You're almost there!</h1>
+        <p class="subtitle">Create a secure password</p>
+        <input type="password" id="passwordInput" placeholder="Choose a strong password" class="big-input">
+        <input type="password" id="confirmPassword" placeholder="Confirm your password" class="big-input" style="margin-top:16px;">
+        <button onclick="completeSignup()" class="primary-btn">Create My Account</button>
+        <p class="secure-note">By continuing, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a></p>
+      </div>
+    </div>
+
+    <div class="trust-badges">
+      <p>Trusted by thousands of Kenyans</p>
+      <div class="badges">
+        <span>100% Confidential</span>
+        <span>Licensed Therapists</span>
+        <span>Affordable Plans</span>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    let assessmentData = {
+      name: '', concerns: [], therapyBefore: '', gender: '', phone: '', password: ''
+    };
+    let currentStep = 1;
+    const totalSteps = 6;
+
+    function saveNameAndNext() {
+      const name = document.getElementById('userNameInput').value.trim();
+      if (!name) return alert('Please enter your name');
+      assessmentData.name = name;
+      nextStep(2);
+    }
+
+    function nextStep(step) {
+      if (currentStep === 2) {
+        const checked = document.querySelectorAll('#step2 input[type="checkbox"]:checked');
+        assessmentData.concerns = Array.from(checked).map(c => c.value);
+        if (assessmentData.concerns.length === 0) return alert('Please select at least one concern');
+      }
+      if (currentStep === 5) {
+        const phone = document.getElementById('phoneInput').value.trim();
+        if (!/^07\d{8}$/.test(phone)) return alert('Please enter a valid Kenyan number (07xxxxxxxx)');
+        assessmentData.phone = phone;
+      }
+
+      document.getElementById(`step${currentStep}`).classList.remove('active');
+      document.getElementById(`step${step}`).classList.add('active');
+      currentStep = step;
+      updateProgress();
+    }
+
+    function setAnswer(key, value) {
+      assessmentData[key] = value;
+    }
+
+    function selectOption(btn) {
+      // Visual feedback: remove selected from siblings
+      const parent = btn.parentElement;
+      parent.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+    }
+
+    function updateProgress() {
+      document.getElementById('currentStep').textContent = currentStep;
+      document.getElementById('progressFill').style.width = (currentStep / totalSteps) * 100 + '%';
+    }
+
+    function completeSignup() {
+      const password = document.getElementById('passwordInput').value;
+      const confirm = document.getElementById('confirmPassword').value;
+      if (password.length < 6) return alert('Password must be at least 6 characters');
+      if (password !== confirm) return alert('Passwords do not match');
+
+      assessmentData.password = password;
+
+      let users = JSON.parse(localStorage.getItem('mindspace_users') || '[]');
+      const email = assessmentData.phone + '@mindspace.co.ke';
+
+      if (users.some(u => u.email === email)) {
+        alert('This phone number is already registered!');
+        window.location.href = 'login.html';
+        return;
+      }
+
+      users.push({
+        name: assessmentData.name,
+        email: email,
+        password: assessmentData.password,
+        phone: assessmentData.phone,
+        concerns: assessmentData.concerns,
+        verified: true
+      });
+
+      localStorage.setItem('mindspace_users', JSON.stringify(users));
+      localStorage.setItem('mindspace_user', JSON.stringify({ name: assessmentData.name, email }));
+      localStorage.setItem('user_assessment', JSON.stringify(assessmentData));
+
+      alert(`Asante ${assessmentData.name}! We're matching you with a therapist now...`);
+      window.location.href = 'dashboard.html';
+    }
+
+    // Start
+    updateProgress();
+  </script>
+</body>
+</html>
