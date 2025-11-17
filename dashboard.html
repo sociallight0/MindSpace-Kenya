@@ -10,32 +10,71 @@
 <body class="dashboard-body">
 
   <!-- Top Navigation -->
-  <header class="main-header">
-    <div class="container nav-container">
-      <div class="logo">MindSpace Kenya</div>
-      
-      <nav class="main-nav">
-        <a href="dashboard.html" class="active">Dashboard</a>
-        <a href="therapy.html">Therapy</a>
-        <a href="ai-assistant.html">AI Assistant</a>
-        <a href="community.html">Community</a>
-      </nav>
+<!-- TOP RIGHT PROFILE WITH EDIT MODAL -->
+<header class="main-header">
+  <div class="container nav-container">
+    <div class="logo">MindSpace Kenya</div>
+    
+    <nav class="main-nav">
+      <a href="dashboard.html" class="active">Dashboard</a>
+      <a href="therapy.html">Therapy</a>
+      <a href="ai-assistant.html">AI Assistant</a>
+      <a href="community.html">Community</a>
+    </nav>
 
-      <!-- Top Right Profile Dropdown -->
-      <div class="profile-dropdown">
-        <div class="profile-trigger" onclick="toggleDropdown()">
-          <img id="headerPic" src="" alt="You" class="header-pic">
+    <!-- PROFILE DROPDOWN -->
+    <div class="profile-dropdown">
+      <div class="profile-trigger" onclick="toggleDropdown()">
+        <img id="headerPic" src="" alt="Profile" class="header-pic">
+        <div class="user-info">
           <span id="headerName">User</span>
-          <span class="dropdown-arrow">Down Arrow</span>
+          <small id="headerUsername">@username</small>
         </div>
-        <div id="dropdownMenu" class="dropdown-menu">
-          <a href="profile.html">My Profile</a>
-          <a href="#" onclick="logout()">Logout</a>
-        </div>
+        <span class="dropdown-arrow">Down Arrow</span>
+      </div>
+
+      <div id="dropdownMenu" class="dropdown-menu">
+        <a href="#" onclick="openEditModal(); return false;">Edit Profile</a>
+        <a href="#" onclick="logout()">Logout</a>
       </div>
     </div>
-  </header>
+  </div>
+</header>
 
+<!-- EDIT PROFILE MODAL -->
+<div id="editProfileModal" class="profile-modal">
+  <div class="profile-modal-content">
+    <span class="close-modal" onclick="closeEditModal()">×</span>
+    <h2>Edit Your Profile</h2>
+    
+    <div style="text-align:center;margin:1.5rem 0;">
+      <img id="modalPicPreview" src="" class="big-profile-pic">
+      <div class="profile-options" style="margin-top:1rem;">
+        <div class="pic-option" onclick="changePic('https://images.pexels.com/photos/6646919/pexels-photo-6646919.jpeg')"><img src="https://images.pexels.com/photos/6646919/pexels-photo-6646919.jpeg"></div>
+        <div class="pic-option" onclick="changePic('https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg')"><img src="https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg"></div>
+        <div class="pic-option" onclick="changePic('https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg')"><img src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg"></div>
+        <div class="pic-option" onclick="changePic('https://images.pexels.com/photos/762020/pexels-photo-762020.jpeg')"><img src="https://images.pexels.com/photos/762020/pexels-photo-762020.jpeg"></div>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label>Full Name</label>
+      <input type="text" id="editName" placeholder="Your full name">
+    </div>
+    <div class="input-group">
+      <label>Username</label>
+      <input type="text" id="editUsername" placeholder="@yourusername">
+    </div>
+    <div class="input-group">
+      <label>Phone Number</label>
+      <input type="tel" id="editPhone" placeholder="0712345678" maxlength="10">
+    </div>
+
+    <button onclick="saveProfileChanges()" class="primary-btn" style="width:100%;margin-top:1rem;">
+      Save Changes
+    </button>
+  </div>
+</div>
   <main class="dashboard-main">
     <div class="container">
       <div class="welcome-section">
