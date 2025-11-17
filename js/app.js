@@ -277,3 +277,21 @@ function writeJournal() { const entry = prompt('Write your journal...'); if (ent
 function breathingExercise() { alert('Inhale 4s → Hold 4s → Exhale 6s. Repeat 5 times.'); }
 function forgotPassword(e) { e.preventDefault(); alert('Check your email for reset link'); }
 function logout() { if (confirm('Log out?')) { localStorage.removeItem('mindspace_user'); window.location.href = 'index.html'; } }
+// DARK MODE TOGGLE
+function toggleDarkMode() {
+  document.body.classList.toggle('dark-mode');
+  const isDark = document.body.classList.contains('dark-mode');
+  localStorage.setItem('dark_mode', isDark ? 'enabled' : 'disabled');
+  
+  // Update icon (optional)
+  const menuItem = event.target;
+  menuItem.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+}
+
+// Load dark mode preference on start
+document.addEventListener('DOMContentLoaded', () => {
+  if (localStorage.getItem('dark_mode') === 'enabled') {
+    document.body.classList.add('dark-mode');
+  }
+  loadUserProfile(); // your existing function
+});
