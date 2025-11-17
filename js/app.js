@@ -81,6 +81,17 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function loadDashboard() {
+  const user = JSON.parse(localStorage.getItem('mindspace_user'));
+  if (!user) return window.location.href = 'login.html';
+
+  document.getElementById('userName').textContent = user.name;
+  document.getElementById('headerName').textContent = user.name.split(' ')[0];
+  const pic = localStorage.getItem('profile_pic') || 'https://images.pexels.com/photos/6646919/pexels-photo-6646919.jpeg';
+  document.getElementById('headerPic').src = pic;
+  // ... rest of your dashboard load code
+}
+
+function loadDashboard() {
   document.getElementById('userName').textContent = currentUser.name;
   document.getElementById('profileName').textContent = currentUser.name;
   document.getElementById('profileEmail').textContent = currentUser.email;
