@@ -5,205 +5,85 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard - MindSpace Kenya</title>
   <link rel="stylesheet" href="css/styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    /* Medium-sized centered dashboard */
-    .dashboard-wrapper {
-      max-width: 900px;
-      margin: 2rem auto;
-      padding: 0 20px;
-    }
-
-    /* Floating Profile Button on Left */
-    .profile-floating {
-      position: fixed;
-      left: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      background: white;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-      cursor: pointer;
-      z-index: 999;
-      border: 5px solid #10b981;
-      overflow: hidden;
-      transition: all 0.3s ease;
-    }
-    .profile-floating:hover {
-      transform: translateY(-50%) scale(1.1);
-      box-shadow: 0 15px 40px rgba(16,185,129,0.4);
-    }
-    .profile-floating img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    /* Profile Modal */
-    .profile-modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.7);
-      z-index: 1000;
-      align-items: center;
-      justify-content: center;
-    }
-    .profile-modal-content {
-      background: white;
-      padding: 2rem;
-      border-radius: 24px;
-      text-align: center;
-      max-width: 400px;
-      width: 90%;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-    }
-    .close-modal {
-      float: right;
-      font-size: 2rem;
-      cursor: pointer;
-      color: #94a3b8;
-    }
-    .profile-options {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
-      margin: 1.5rem 0;
-    }
-    .pic-option {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      overflow: hidden;
-      border: 4px solid #e2e8f0;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-    .pic-option:hover, .pic-option.selected {
-      border-color: #10b981;
-      transform: scale(1.1);
-    }
-    .pic-option img { width: 100%; height: 100%; object-fit: cover; }
-  </style>
 </head>
-<body>
+<body class="dashboard-body">
 
-  <!-- Floating Profile Button -->
-  <div class="profile-floating" onclick="openProfileModal()">
-    <img id="floatingPic" src="" alt="You">
-  </div>
-
-  <!-- Profile Change Modal -->
-  <div id="profileModal" class="profile-modal">
-    <div class="profile-modal-content">
-      <span class="close-modal" onclick="closeProfileModal()">×</span>
-      <h2>Change Profile Picture</h2>
-      <p>Choose your vibe</p>
-      <div class="profile-options">
-        <div class="pic-option" onclick="changePic('https://images.pexels.com/photos/6646919/pexels-photo-6646919.jpeg')">
-          <img src="https://images.pexels.com/photos/6646919/pexels-photo-6646919.jpeg" alt="">
-        </div>
-        <div class="pic-option" onclick="changePic('https://images.pexels.com/photos/5691717/pexels-photo-5691717.jpeg')">
-          <img src="https://images.pexels.com/photos/5691717/pexels-photo-5691717.jpeg" alt="">
-        </div>
-        <div class="pic-option" onclick="changePic('https://images.pexels.com/photos/7746658/pexels-photo-7746658.jpeg')">
-          <img src="https://images.pexels.com/photos/7746658/pexels-photo-7746658.jpeg" alt="">
-        </div>
-        <div class="pic-option" onclick="changePic('https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg')">
-          <img src="https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg" alt="">
-        </div>
-        <div class="pic-option" onclick="changePic('https://images.pexels.com/photos/762020/pexels-photo-762020.jpeg')">
-          <img src="https://images.pexels.com/photos/762020/pexels-photo-762020.jpeg" alt="">
-        </div>
-        <div class="pic-option" onclick="changePic('https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg')">
-          <img src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg" alt="">
-        </div>
-      </div>
-      <button onclick="closeProfileModal()" style="background:#64748b;padding:12px 30px;border-radius:12px;color:white;border:none;cursor:pointer;">
-        Done
-      </button>
-    </div>
-  </div>
-
-  <header>
-    <nav class="container">
+  <!-- Top Navigation -->
+  <header class="main-header">
+    <div class="container nav-container">
       <div class="logo">MindSpace Kenya</div>
-      <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="#" onclick="logout()">Logout</a>
+      
+      <nav class="main-nav">
+        <a href="dashboard.html" class="active">Dashboard</a>
+        <a href="therapy.html">Therapy</a>
+        <a href="ai-assistant.html">AI Assistant</a>
+        <a href="community.html">Community</a>
+      </nav>
+
+      <!-- Top Right Profile Dropdown -->
+      <div class="profile-dropdown">
+        <div class="profile-trigger" onclick="toggleDropdown()">
+          <img id="headerPic" src="" alt="You" class="header-pic">
+          <span id="headerName">User</span>
+          <span class="dropdown-arrow">Down Arrow</span>
+        </div>
+        <div id="dropdownMenu" class="dropdown-menu">
+          <a href="profile.html">My Profile</a>
+          <a href="#" onclick="logout()">Logout</a>
+        </div>
       </div>
-    </nav>
+    </div>
   </header>
 
-  <main class="dashboard">
-    <div class="dashboard-wrapper">
-
-      <!-- Warm Welcome -->
-      <div class="greeting" style="text-align:center;margin:2rem 0;">
-        <h1 style="font-size:3rem;color:#064e3b;">
-          Hello <span id="userName">Friend</span>! 
-          <span style="color:#10b981;font-size:3.5rem;">Welcome</span>
-        </h1>
+  <main class="dashboard-main">
+    <div class="container">
+      <div class="welcome-section">
+        <h1>Hello <span id="userName">Friend</span>! <span style="color:#10b981;">Welcome Back</span></h1>
+        <p>How are you feeling today?</p>
       </div>
 
-      <!-- Your existing sections -->
-      <section class="profile">
-        <h2>Your Profile</h2>
-        <div class="profile-card">
-          <div class="profile-pic">
-            <img id="profilePic" src="" alt="You">
-          </div>
-          <div class="profile-info">
-            <p><strong>Name:</strong> <span id="profileName">Loading...</span></p>
-            <p><strong>Email:</strong> <span id="profileEmail">Loading...</span></p>
-          </div>
+      <!-- Quick Actions -->
+      <div class="quick-actions">
+        <div class="action-card" onclick="location.href='therapy.html'">
+          <h3>Book Session</h3>
+          <p>Talk to your therapist</p>
         </div>
-      </section>
+        <div class="action-card" onclick="location.href='ai-assistant.html'">
+          <h3>AI Assistant</h3>
+          <p>Get instant support</p>
+        </div>
+        <div class="action-card" onclick="location.href='community.html'">
+          <h3>Community</h3>
+          <p>Connect with others</p>
+        </div>
+      </div>
 
-      <!-- Therapist, Appointments, Tools, Chart, etc. (keep all your existing code below) -->
-      <!-- ... Rest of your dashboard content ... -->
-
+      <!-- Mood Chart & Appointments -->
+      <div class="grid-2">
+        <div class="chart-card">
+          <h2>Your Mood This Week</h2>
+          <canvas id="moodChart"></canvas>
+        </div>
+        <div class="appointments-card">
+          <h2>Upcoming Sessions</h2>
+          <ul id="appointmentList"></ul>
+          <button onclick="location.href='therapy.html'">Book New Session</button>
+        </div>
+      </div>
     </div>
   </main>
 
-  <footer>
-    <div class="container">
-      <p>© 2025 MindSpace Kenya • Made with love in Nairobi</p>
-    </div>
-  </footer>
-
   <script src="js/app.js"></script>
   <script>
-    // Update floating picture too
-    function updateProfilePics() {
-      const pic = localStorage.getItem('profile_pic') || 'https://images.pexels.com/photos/6646919/pexels-photo-6646919.jpeg';
-      document.getElementById('profilePic').src = pic;
-      document.getElementById('floatingPic').src = pic;
+    function toggleDropdown() {
+      document.getElementById('dropdownMenu').classList.toggle('show');
     }
-
-    function openProfileModal() {
-      document.getElementById('profileModal').style.display = 'flex';
+    window.onclick = function(e) {
+      if (!e.target.matches('.profile-trigger') && !e.target.matches('.header-pic') && !e.target.matches('.dropdown-arrow')) {
+        document.getElementById('dropdownMenu').classList.remove('show');
+      }
     }
-    function closeProfileModal() {
-      document.getElementById('profileModal').style.display = 'none';
-    }
-
-    function changePic(url) {
-      localStorage.setItem('profile_pic', url);
-      updateProfilePics();
-      document.querySelectorAll('.pic-option').forEach(p => p.classList.remove('selected'));
-      event.target.closest('.pic-option').classList.add('selected');
-      setTimeout(() => alert('Profile picture updated!'), 300);
-    }
-
-    // Load on start
-    document.addEventListener('DOMContentLoaded', () => {
-      if (window.loadDashboard) loadDashboard();
-      updateProfilePics();
-    });
   </script>
 </body>
 </html>
