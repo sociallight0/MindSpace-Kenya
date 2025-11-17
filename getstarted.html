@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Get Started - MindSpace Kenya</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="getstarted-page">
+
+  <header class="simple-header">
+    <div class="container">
+      <div class="logo">MindSpace Kenya</div>
+      <a href="login.html" class="text-link">Already have an account? Log in</a>
+    </div>
+  </header>
+
+  <main class="getstarted-container">
+    <div class="progress-container">
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <p><span id="currentStep">1</span> of 6</p>
+    </div>
+
+    <div class="question-card">
+      <div id="step1" class="step active">
+        <h1>Let's find the right therapist for you</h1>
+        <p class="subtitle">First, what should we call you?</p>
+        <input type="text" id="userNameInput" placeholder="Your full name" class="big-input" autofocus>
+        <button onclick="nextStep(2)" class="primary-btn">Continue</button>
+      </div>
+
+      <div id="step2" class="step">
+        <h1>What's bringing you here today?</h1>
+        <p class="subtitle">Select all that apply</p>
+        <div class="options-grid">
+          <label><input type="checkbox" value="Stress & Anxiety"> Stress & Anxiety</label>
+          <label><input type="checkbox" value="Depression"> Depression</label>
+          <label><input type="checkbox" value="Relationships"> Relationships</label>
+          <label><input type="checkbox" value="Family Conflict"> Family Conflict</label>
+          <label><input type="checkbox" value="Grief"> Grief & Loss</label>
+          <label><input type="checkbox" value="Trauma"> Trauma</label>
+          <label><input type="checkbox" value="Self-esteem"> Self-esteem</label>
+          <label><input type="checkbox" value="Work Stress"> Work Stress</label>
+        </div>
+        <button onclick="nextStep(3)" class="primary-btn">Continue</button>
+      </div>
+
+      <div id="step3" class="step">
+        <h1>Have you been in therapy before?</h1>
+        <div class="big-options">
+          <button onclick="setAnswer('Yes'); nextStep(4)" class="option-btn">Yes</button>
+          <button onclick="setAnswer('No'); nextStep(4)" class="option-btn">No</button>
+          <button onclick="setAnswer('Not sure'); nextStep(4)" class="option-btn">Not sure</button>
+        </div>
+      </div>
+
+      <div id="step4" class="step">
+        <h1>Which describes you best?</h1>
+        <div class="big-options">
+          <button onclick="setAnswer('Male'); nextStep(5)" class="option-btn">Male</button>
+          <button onclick="setAnswer('Female'); nextStep(5)" class="option-btn">Female</button>
+          <button onclick="setAnswer('Non-binary'); nextStep(5)" class="option-btn">Non-binary</button>
+          <button onclick="setAnswer('Prefer not to say'); nextStep(5)" class="option-btn">Prefer not to say</button>
+        </div>
+      </div>
+
+      <div id="step5" class="step">
+        <h1>What's your phone number?</h1>
+        <p class="subtitle">We’ll send you a confirmation code (Kenya only)</p>
+        <input type="tel" id="phoneInput" placeholder="0712345678" class="big-input" maxlength="10">
+        <button onclick="nextStep(6)" class="primary-btn">Send Code</button>
+      </div>
+
+      <div id="step6" class="step">
+        <h1>You're almost there!</h1>
+        <p class="subtitle">Create a secure password to protect your account</p>
+        <input type="password" id="passwordInput" placeholder="Choose a strong password" class="big-input">
+        <input type="password" id="confirmPassword" placeholder="Confirm password" class="big-input" style="margin-top:12px;">
+        <button onclick="completeSignup()" class="primary-btn">Create My Account</button>
+        <p class="secure-note">By continuing, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a></p>
+      </div>
+    </div>
+
+    <div class="trust-badges">
+      <p>Trusted by thousands of Kenyans</p>
+      <div class="badges">
+        <span>100% Confidential</span>
+        <span>Licensed Therapists</span>
+        <span>Affordable Plans</span>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/getstarted.js"></script>
+</body>
+</html>
