@@ -265,3 +265,16 @@ footer { background: rgba(6, 78, 59, 0.95); color: white; text-align: center; pa
 .step.active { display: block; }
 
 .secure-note a { color: #10b981; text-decoration: underline; }
+/* Make dashboard content breathe */
+.dashboard-wrapper > section {
+  margin-bottom: 3rem;
+}
+
+/* Smooth modal fade */
+.profile-modal {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.profile-modal[style*="flex"] {
+  opacity: 1;
+}
