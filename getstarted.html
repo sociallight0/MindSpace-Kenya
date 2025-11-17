@@ -25,13 +25,15 @@
     </div>
 
     <div class="question-card">
+      <!-- STEP 1 -->
       <div id="step1" class="step active">
         <h1>Let's find the right therapist for you</h1>
         <p class="subtitle">First, what should we call you?</p>
         <input type="text" id="userNameInput" placeholder="Your full name" class="big-input" autofocus>
-        <button onclick="nextStep(2)" class="primary-btn">Continue</button>
+        <button onclick="saveNameAndNext()" class="primary-btn">Continue</button>
       </div>
 
+      <!-- STEP 2 -->
       <div id="step2" class="step">
         <h1>What's bringing you here today?</h1>
         <p class="subtitle">Select all that apply</p>
@@ -48,25 +50,28 @@
         <button onclick="nextStep(3)" class="primary-btn">Continue</button>
       </div>
 
+      <!-- STEP 3 -->
       <div id="step3" class="step">
         <h1>Have you been in therapy before?</h1>
         <div class="big-options">
-          <button onclick="setAnswer('Yes'); nextStep(4)" class="option-btn">Yes</button>
-          <button onclick="setAnswer('No'); nextStep(4)" class="option-btn">No</button>
-          <button onclick="setAnswer('Not sure'); nextStep(4)" class="option-btn">Not sure</button>
+          <button onclick="setAnswer('therapyBefore', 'Yes'); nextStep(4)" class="option-btn">Yes</button>
+          <button onclick="setAnswer('therapyBefore', 'No'); nextStep(4)" class="option-btn">No</button>
+          <button onclick="setAnswer('therapyBefore', 'Not sure'); nextStep(4)" class="option-btn">Not sure</button>
         </div>
       </div>
 
+      <!-- STEP 4 -->
       <div id="step4" class="step">
         <h1>Which describes you best?</h1>
         <div class="big-options">
-          <button onclick="setAnswer('Male'); nextStep(5)" class="option-btn">Male</button>
-          <button onclick="setAnswer('Female'); nextStep(5)" class="option-btn">Female</button>
-          <button onclick="setAnswer('Non-binary'); nextStep(5)" class="option-btn">Non-binary</button>
-          <button onclick="setAnswer('Prefer not to say'); nextStep(5)" class="option-btn">Prefer not to say</button>
+          <button onclick="setAnswer('gender', 'Male'); nextStep(5)" class="option-btn">Male</button>
+          <button onclick="setAnswer('gender', 'Female'); nextStep(5)" class="option-btn">Female</button>
+          <button onclick="setAnswer('gender', 'Non-binary'); nextStep(5)" class="option-btn">Non-binary</button>
+          <button onclick="setAnswer('gender', 'Prefer not to say'); nextStep(5)" class="option-btn">Prefer not to say</button>
         </div>
       </div>
 
+      <!-- STEP 5 -->
       <div id="step5" class="step">
         <h1>What's your phone number?</h1>
         <p class="subtitle">We’ll send you a confirmation code (Kenya only)</p>
@@ -74,6 +79,7 @@
         <button onclick="nextStep(6)" class="primary-btn">Send Code</button>
       </div>
 
+      <!-- STEP 6 -->
       <div id="step6" class="step">
         <h1>You're almost there!</h1>
         <p class="subtitle">Create a secure password to protect your account</p>
@@ -94,6 +100,107 @@
     </div>
   </main>
 
-  <script src="js/getstarted.js"></script>
+  <!-- FIXED SCRIPT -->
+  <script>
+    let assessmentData = {
+      name: '',
+      concerns: [],
+      therapyBefore: '',
+      gender: '',
+      phone: '',
+      password: ''
+    };
+
+    let currentStep = 1;
+    const totalSteps = 6;
+
+    // Step 1 – Save name and move forward
+    function saveNameAndNext() {
+      const name = document.getElementById('userNameInput').value.trim();
+      if (!name) {
+        alert('Please enter your name');
+        return;
+      }
+      assessmentData.name = name;
+      nextStep(2);
+    }
+
+    function nextStep(step) {
+      // Validate current step before moving
+      if (currentStep === 2) {
+        const checked = document.querySelectorAll('#step2 input[type="checkbox"]:checked');
+        assessmentData.concerns = Array.from(checked).map(c => c.value);
+        if (assessmentData.concerns.length === 0) {
+          alert('Please select at least one concern');
+          return;
+        }
+      }
+
+      if (currentStep === 5) {
+        const phone = document.getElementById('phoneInput').value.trim();
+        if (!/^07\d{8}$/.test(phone)) {
+          alert('Please enter a valid Kenyan mobile number (07xxxxxxxx)');
+          return;
+        }
+        assessmentData.phone = phone;
+      }
+
+      // Hide current, show next
+      document.getElementById(`step${currentStep}`).classList.remove('active');
+      document.getElementById(`step${step}`).classList.add('active');
+      currentStep = step;
+      updateProgress();
+    }
+
+    function setAnswer(key, value) {
+      assessmentData[key] = value;
+    }
+
+    function updateProgress() {
+      document.getElementById('currentStep').textContent = currentStep;
+      const percentage = (currentStep / totalSteps) * 100;
+      document.getElementById('progressFill').style.width = percentage + '%';
+    }
+
+    function completeSignup() {
+      const password = document.getElementById('passwordInput').value;
+      const confirm = document.getElementById('confirmPassword').value;
+
+      if (password.length < 6) return alert('Password must be at least 6 characters');
+      if (password !== confirm) return alert('Passwords do not match');
+
+      assessmentData.password = password;
+
+      // Save user (same system as before)
+      let users = JSON.parse(localStorage.getItem('mindspace_users') || '[]');
+      const email = assessmentData.phone + '@mindspace.co.ke';
+
+      if (users.some(u => u.email === email)) {
+        alert('This phone number is already registered. Please log in.');
+        window.location.href = 'login.html';
+        return;
+      }
+
+      const newUser = {
+        name: assessmentData.name,
+        email: email,
+        password: assessmentData.password,
+        phone: assessmentData.phone,
+        concerns: assessmentData.concerns,
+        verified: true
+      };
+
+      users.push(newUser);
+      localStorage.setItem('mindspace_users', JSON.stringify(users));
+      localStorage.setItem('mindspace_user', JSON.stringify({ name: newUser.name, email: newUser.email }));
+      localStorage.setItem('user_assessment', JSON.stringify(assessmentData));
+
+      alert(`Welcome to MindSpace Kenya, ${assessmentData.name}! We're matching you with a therapist now...`);
+      window.location.href = 'dashboard.html';
+    }
+
+    // Initialize
+    updateProgress();
+  </script>
 </body>
 </html>
