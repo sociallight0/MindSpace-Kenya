@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard - MindSpace Kenya</title>
   <link rel="stylesheet" href="css/styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
@@ -23,77 +23,68 @@
     <div class="container">
       <div class="greeting">
         <h1>Hello <span id="userName"></span>! Welcome back 😊</h1>
-        <p>Here's your personalized mental health dashboard.</p>
       </div>
 
-      <!-- Profile Section (Locked Name/Email, Editable Pic) -->
-      <section class="profile-section">
+      <!-- Profile Section -->
+      <section class="profile">
         <h2>Your Profile</h2>
         <div class="profile-card">
           <div class="profile-pic" onclick="changeProfilePic()">
-            <img id="profilePic" src="https://images.pexels.com/photos/6646919/pexels-photo-6646919.jpeg" alt="Your Photo">
+            <img id="profilePic" src="https://images.pexels.com/photos/6646919/pexels-photo-6646919.jpeg" alt="Profile Picture">
           </div>
           <div class="profile-info">
-            <p><strong>Name:</strong> <span id="profileName">Loading...</span> <small>(Locked)</small></p>
-            <p><strong>Email:</strong> <span id="profileEmail">Loading...</span> <small>(Locked for privacy)</small></p>
+            <p><strong>Name:</strong> <span id="profileName">Loading...</span></p>
+            <p><strong>Email:</strong> <span id="profileEmail">Loading...</span> (Locked for privacy)</p>
           </div>
         </div>
       </section>
 
       <!-- Assigned Therapist -->
-      <section class="therapist-section">
+      <section class="therapist">
         <h2>Your Assigned Therapist</h2>
         <div class="therapist-card">
-          <img id="therapistPic" src="https://images.pexels.com/photos/5691717/pexels-photo-5691717.jpeg" alt="Therapist Photo">
+          <img id="therapistPic" src="https://images.pexels.com/photos/6646919/pexels-photo-6646919.jpeg" alt="Therapist">
           <h3 id="therapistName">Dr. Aisha Mwangi</h3>
-          <p>Specialist in anxiety and stress management. Available for sessions.</p>
-          <button onclick="bookAppointment()">Book Next Session</button>
+          <p>Specialist in anxiety & stress. Ready to support you.</p>
+          <button onclick="bookAppointment()">Book Session</button>
         </div>
       </section>
 
       <!-- Appointments -->
-      <section class="appointments-section">
+      <section class="appointments">
         <h2>Upcoming Appointments</h2>
         <ul id="appointmentList"></ul>
-        <button onclick="addAppointment()">Add New Appointment</button>
+        <button onclick="addAppointment()">Add Appointment</button>
       </section>
 
-      <!-- Tools -->
-      <section class="tools-section">
-        <h2>Quick Tools</h2>
-        <div class="tools-grid">
-          <div class="tool-card" onclick="logMood()">
-            <h3>Log Mood</h3>
-            <p>Track your daily feelings</p>
-          </div>
-          <div class="tool-card" onclick="writeJournal()">
-            <h3>Journal</h3>
-            <p>Write private entries</p>
-          </div>
-          <div class="tool-card" onclick="breathingExercise()">
-            <h3>Breathing Exercise</h3>
-            <p>Calm in 2 minutes</p>
-          </div>
+      <!-- Tools Grid -->
+      <div class="grid">
+        <div class="tool-card" onclick="logMood()">
+          <h3>Log Mood</h3>
+          <p>Track your feelings</p>
         </div>
-      </section>
+        <div class="tool-card" onclick="writeJournal()">
+          <h3>Journal</h3>
+          <p>Write privately</p>
+        </div>
+        <div class="tool-card" onclick="breathingExercise()">
+          <h3>Breathing</h3>
+          <p>Quick calm</p>
+        </div>
+      </div>
 
       <!-- Mood Chart -->
-      <section class="chart-section">
+      <div class="chart-card">
         <h2>Your Mood Trends</h2>
-        <div class="chart-card">
-          <canvas id="moodChart"></canvas>
-        </div>
-      </section>
+        <canvas id="moodChart"></canvas>
+      </div>
 
-      <!-- Crisis Support -->
-      <section class="crisis-section">
-        <div class="crisis-card">
-          <h3>Need Help Now? (Kenya)</h3>
-          <p><strong>Befrienders:</strong> +254 722 201 789</p>
-          <p><strong>Red Cross:</strong> 1199</p>
-          <p><strong>Helpline:</strong> 1190</p>
-        </div>
-      </section>
+      <!-- Crisis -->
+      <div class="crisis-card">
+        <h3>Crisis Support</h3>
+        <p>Befrienders Kenya: +254 722 201 789</p>
+        <p>Red Cross: 1199</p>
+      </div>
     </div>
   </main>
 
