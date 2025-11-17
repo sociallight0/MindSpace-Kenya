@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - MindSpace Kenya</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="login-page">
+  <div class="login-container">
+    <div class="login-header">
+      <div class="logo">MindSpace Kenya</div>
+      <h1>Create your account</h1>
+      <p>Join thousands of Kenyans healing with professional support.</p>
+    </div>
+
+    <div class="login-card">
+      <form id="signupForm">
+        <div class="input-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" placeholder="John Doe" required>
+        </div>
+
+        <div class="input-group">
+          <label for="signupEmail">Email address</label>
+          <input type="email" id="signupEmail" placeholder="you@example.com" required>
+        </div>
+
+        <div class="input-group">
+          <label for="signupPassword">Password</label>
+          <input type="password" id="signupPassword" placeholder="At least 6 characters" required>
+        </div>
+
+        <div class="input-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <input type="password" id="confirmPassword" placeholder="Type password again" required>
+          <small class="error" id="confirmError"></small>
+        </div>
+
+        <div class="input-group">
+          <label for="verificationCode">Verification Code</label>
+          <input type="text" id="verificationCode" placeholder="Enter 6-digit code" maxlength="6" disabled>
+          <button type="button" id="sendCodeBtn" class="small-btn">Send Code to Email</button>
+          <small class="success hidden" id="codeSent">Check your email! (Check console)</small>
+          <small class="error" id="codeError"></small>
+        </div>
+
+        <button type="submit" class="login-btn">
+          <span class="btn-text">Create Account</span>
+          <span class="loading hidden">Creating...</span>
+        </button>
+      </form>
+
+      <div class="login-footer">
+        <p>Already have an account? <a href="login.html">Log in</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
