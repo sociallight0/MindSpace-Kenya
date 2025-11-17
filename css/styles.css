@@ -87,3 +87,181 @@ button, .mpesa-btn, .chat-btn { background: var(--accent); color: white; padding
 
 footer { background: rgba(6, 78, 59, 0.95); color: white; text-align: center; padding: 2rem; }
 @media (max-width: 768px) { .hero h1 { font-size: 2.5rem; } }
+/* Get Started Page - BetterHelp Style */
+.getstarted-page {
+  background: linear-gradient(135deg, #064e3b 0%, #047857 100%);
+  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+}
+
+.simple-header {
+  padding: 1.5rem 0;
+  background: rgba(0,0,0,0.1);
+}
+
+.simple-header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.text-link {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.getstarted-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem 20px;
+  color: white;
+}
+
+.progress-container {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.progress-bar {
+  height: 8px;
+  background: rgba(255,255,255,0.3);
+  border-radius: 4px;
+  overflow: hidden;
+  max-width: 400px;
+  margin: 1rem auto;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #10b981;
+  width: 16.6%;
+  transition: width 0.6s ease;
+}
+
+.question-card {
+  background: white;
+  color: #1e293b;
+  padding: 3rem;
+  border-radius: 24px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+  text-align: center;
+}
+
+.question-card h1 {
+  font-family: 'Sora', sans-serif;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #064e3b;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: #64748b;
+  margin-bottom: 2rem;
+}
+
+.big-input {
+  width: 100%;
+  padding: 18px;
+  font-size: 1.2rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+}
+
+.big-input:focus {
+  outline: none;
+  border-color: #10b981;
+}
+
+.primary-btn {
+  background: #10b981;
+  color: white;
+  padding: 16px 40px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.primary-btn:hover {
+  background: #059669;
+}
+
+.options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 2rem 0;
+  text-align: left;
+}
+
+.options-grid label {
+  display: block;
+  padding: 16px;
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.options-grid input:checked + label,
+.options-grid label:hover {
+  border-color: #10b981;
+  background: #ecfdf5;
+}
+
+.big-options {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin: 3rem 0;
+}
+
+.option-btn {
+  padding: 20px;
+  font-size: 1.3rem;
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.option-btn:hover {
+  border-color: #10b981;
+  background: #ecfdf5;
+}
+
+.trust-badges {
+  text-align: center;
+  margin-top: 4rem;
+}
+
+.badges {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.badges span {
+  background: rgba(255,255,255,0.2);
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-size: 0.9rem;
+}
+
+.step { display: none; }
+.step.active { display: block; }
+
+.secure-note a { color: #10b981; text-decoration: underline; }
