@@ -14,18 +14,18 @@
       <div class="nav-links">
         <a href="#about">About</a>
         <a href="#features">Features</a>
-        <a href="#" id="loginBtn">Login</a>
-        <a href="#" id="signupBtn">Sign Up</a>
+        <a href="login.html">Login</a>
+        <a href="signup.html">Sign Up</a>
       </div>
     </nav>
   </header>
 
-  <!-- Hero Signup -->
+  <!-- Hero -->
   <section class="hero">
     <div class="container">
       <h1>Start Healing Today</h1>
       <p>Connect with Kenyan mental health experts. Private, affordable, effective.</p>
-      <button class="cta-btn" onclick="openModal('signupModal')">Get Matched Now</button>
+      <a href="signup.html" class="cta-btn">Get Matched Now</a>
     </div>
   </section>
 
@@ -58,34 +58,6 @@
       </div>
     </div>
   </section>
-
-  <!-- Modals -->
-  <!-- Login Modal -->
-  <div id="loginModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal('loginModal')">&times;</span>
-      <h2>Login</h2>
-      <form id="loginForm">
-        <input type="email" id="loginEmail" placeholder="Email" required>
-        <input type="password" id="loginPassword" placeholder="Password" required>
-        <button type="submit">Login</button>
-      </form>
-    </div>
-  </div>
-
-  <!-- Signup Modal -->
-  <div id="signupModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal('signupModal')">&times;</span>
-      <h2>Create Account</h2>
-      <form id="signupForm">
-        <input type="text" id="signupName" placeholder="Full Name" required>
-        <input type="email" id="signupEmail" placeholder="Email" required>
-        <input type="password" id="signupPassword" placeholder="Password" required>
-        <button type="submit">Sign Up</button>
-      </form>
-    </div>
-  </div>
 
   <footer>
     <div class="container">
