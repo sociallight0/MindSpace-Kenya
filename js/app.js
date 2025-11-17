@@ -89,6 +89,79 @@ function loadDashboard() {
   const pic = localStorage.getItem('profile_pic') || 'https://images.pexels.com/photos/6646919/pexels-photo-6646919.jpeg';
   document.getElementById('headerPic').src = pic;
   // ... rest of your dashboard load code
+  // Load user data into header + modal
+function loadUserProfile() {
+  const user = JSON.parse(localStorage.getItem('mindspace_user'));
+  if (!user) return window.location.href = 'login.html';
+
+  const pic = localStorage.getItem('profile_pic') || 'https://images.pexels.com/photos/6646919/pexels-photo-6646919.jpeg';
+  const username = localStorage.getItem('user_username') || '@' + user.name.toLowerCase().replace(' ', '');
+
+  document.getElementById('headerName').textContent = user.name.split(' ')[0];
+  document.getElementById('headerUsername').textContent = username;
+  document.getElementById('headerPic').src = pic;
+  document.getElementById('modalPicPreview').src = pic;
+
+  // Fill modal fields
+  document.getElementById('editName').value = user.name;
+  document.getElementById('editUsername').value = username;
+  document.getElementById('editPhone').value = user.phone || '';
+}
+
+// Toggle dropdown
+function toggleDropdown() {
+  document.getElementById('dropdownMenu').classList.toggle('show');
+}
+
+// Open/Close Edit Modal
+function openEditModal() {
+  document.getElementById('editProfileModal').style.display = 'flex';
+  loadUserProfile();
+}
+function closeEditModal() {
+  document.getElementById('editProfileModal').style.display = 'none';
+}
+
+// Change profile picture
+function changePic(url) {
+  localStorage.setItem('profile_pic', url);
+  document.getElementById('modalPicPreview').src = url;
+  document.getElementById('headerPic').src = url;
+}
+
+// Save all changes
+function saveProfileChanges() {
+  const newName = document.getElementById('editName').value.trim();
+  const newUsername = document.getElementById('editUsername').value.trim().replace('@', '');
+  const newPhone = document.getElementById('editPhone').value.trim();
+
+  if (!newName || !newUsername) {
+    alert('Name and username are required');
+    return;
+  }
+
+  const user = JSON.parse(localStorage.getItem('mindspace_user'));
+  user.name = newName;
+  user.phone = newPhone;
+
+  localStorage.setItem('mindspace_user', JSON.stringify(user));
+  localStorage.setItem('user_username', '@' + newUsername);
+
+  alert('Profile updated successfully!');
+  closeEditModal();
+  loadUserProfile(); // Refresh header
+  location.reload(); // Optional: refresh page
+}
+
+// Close dropdown when clicking outside
+window.onclick = function(e) {
+  if (!e.target.closest('.profile-trigger') && !e.target.closest('.dropdown-menu')) {
+    document.getElementById('dropdownMenu')?.classList.remove('show');
+  }
+}
+
+// Call on page load
+document.addEventListener('DOMContentLoaded', loadUserProfile);
 }
 
 function loadDashboard() {
