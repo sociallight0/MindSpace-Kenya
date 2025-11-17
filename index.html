@@ -1,398 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>MindSpace Kenya - Start Your Mental Health Journey</title>
-  <meta name="description" content="Get matched with a Kenyan mental health professional today. Free signup for mood tracking, therapy matching, and crisis support."/>
-  <link rel="icon" href="https://fav.farm/leaf" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MindSpace Kenya - Start Your Journey</title>
+  <link rel="stylesheet" href="css/styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  
-  <style>
-    :root {
-      --jungle: #064e3b;
-      --jungle-light: #059669;
-      --jungle-bg: linear-gradient(135deg, #064e3b 0%, #047857 50%, #065f46 100%);
-      --card-bg: rgba(255, 255, 255, 0.95);
-      --text: #0f172a;
-      --text-light: #475569;
-      --accent: #10b981;
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: var(--jungle-bg);
-      color: var(--text);
-      line-height: 1.7;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-    h1, h2, h3 { font-family: 'Sora', sans-serif; font-weight: 600; }
-
-    .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-
-    header {
-      background: rgba(6, 78, 59, 0.95);
-      padding: 1rem 0;
-      position: sticky; top: 0; z-index: 100;
-      backdrop-filter: blur(10px);
-    }
-    nav { display: flex; justify-content: space-between; align-items: center; }
-    .logo {
-      font-size: 2rem;
-      font-weight: 700;
-      color: white;
-    }
-    .nav-links a {
-      color: white;
-      text-decoration: none;
-      margin-left: 2rem;
-      font-weight: 500;
-    }
-    #signupBtn {
-      background: var(--accent);
-      color: white;
-      padding: 0.8rem 2rem;
-      border-radius: 50px;
-      font-weight: 600;
-      text-decoration: none;
-      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
-    }
-
-    /* Hero Signup Section - Like BetterHelp */
-    .hero {
-      background: var(--jungle-bg);
-      padding: 100px 20px;
-      text-align: center;
-      color: white;
-      position: relative;
-    }
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: url('https://images.pexels.com/photos/6646919/pexels-photo-6646919.jpeg?auto=compress&cs=tinysrgb&w=1920') center/cover;
-      opacity: 0.1;
-      z-index: -1;
-    }
-    .hero h1 {
-      font-size: 4rem;
-      margin-bottom: 1rem;
-      font-weight: 700;
-    }
-    .hero p {
-      font-size: 1.5rem;
-      margin-bottom: 2rem;
-      max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .signup-form {
-      background: var(--card-bg);
-      padding: 40px;
-      border-radius: 20px;
-      max-width: 500px;
-      margin: 0 auto;
-      box-shadow: 0 25px 50px rgba(0,0,0,0.2);
-    }
-    .signup-form input {
-      width: 100%;
-      padding: 16px;
-      margin: 12px 0;
-      border: 2px solid #d1d5db;
-      border-radius: 12px;
-      font-size: 1.1rem;
-    }
-    .signup-btn {
-      background: var(--accent);
-      color: white;
-      width: 100%;
-      padding: 18px;
-      border: none;
-      border-radius: 12px;
-      font-size: 1.3rem;
-      font-weight: 600;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-    .signup-btn:hover { background: #047857; }
-
-    /* About Us Section */
-    .about {
-      padding: 80px 20px;
-      background: var(--jungle-bg);
-      color: white;
-      text-align: center;
-    }
-    .about h2 { font-size: 3rem; margin-bottom: 2rem; }
-    .about p { font-size: 1.3rem; max-width: 900px; margin: 0 auto 2rem; }
-
-    /* Features Grid */
-    .features {
-      padding: 80px 20px;
-      background: var(--jungle-bg);
-    }
-    .features .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      margin-top: 3rem;
-    }
-    .feature-card {
-      background: var(--card-bg);
-      padding: 2.5rem;
-      border-radius: 20px;
-      text-align: center;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-      border-top: 5px solid var(--jungle-light);
-    }
-    .feature-card img {
-      width: 80px;
-      height: 80px;
-      margin-bottom: 1rem;
-    }
-
-    /* Testimonials */
-    .testimonials {
-      padding: 80px 20px;
-      background: var(--jungle-bg);
-      color: white;
-      text-align: center;
-    }
-    .testimonial {
-      background: rgba(255,255,255,0.1);
-      padding: 2rem;
-      border-radius: 16px;
-      margin: 2rem auto;
-      max-width: 600px;
-    }
-
-    /* Dashboard Tools */
-    .tools {
-      padding: 80px 20px;
-      background: var(--jungle-bg);
-    }
-    .tools .grid { gap: 2rem; }
-    .tool-card {
-      background: var(--card-bg);
-      padding: 2.5rem;
-      border-radius: 20px;
-      text-align: center;
-      cursor: pointer;
-      transition: 0.4s;
-      border: 3px solid var(--jungle-light);
-    }
-    .tool-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 25px 50px rgba(5, 150, 105, 0.3);
-    }
-
-    canvas { max-width: 100%; height: 300px !important; }
-
-    .crisis {
-      background: rgba(239, 68, 68, 0.1) !important;
-      border-color: #ef4444 !important;
-      color: #dc2626;
-    }
-
-    footer {
-      background: rgba(6, 78, 59, 0.95);
-      color: white;
-      text-align: center;
-      padding: 60px 20px;
-    }
-  </style>
 </head>
 <body>
-
   <header>
     <nav class="container">
       <div class="logo">MindSpace Kenya</div>
       <div class="nav-links">
-        <a href="#about">About Us</a>
+        <a href="#about">About</a>
         <a href="#features">Features</a>
-        <a href="#testimonials">Stories</a>
-        <a href="#tools">Tools</a>
-        <a id="signupBtn" href="#signup">Get Started</a>
+        <a href="#" id="loginBtn">Login</a>
+        <a href="#" id="signupBtn">Sign Up</a>
       </div>
     </nav>
   </header>
 
-  <!-- Hero Signup - Like BetterHelp -->
-  <section class="hero" id="signup">
+  <!-- Hero Signup -->
+  <section class="hero">
     <div class="container">
-      <h1>Start Your Journey to Better Mental Health</h1>
-      <p>Get matched with a licensed Kenyan therapist in minutes. Affordable, private, and effective online support.</p>
-      <div class="signup-form">
-        <h3 style="margin-bottom: 20px; color: var(--text);">Take the first step today</h3>
-        <input type="text" placeholder="Your name" id="userName" required />
-        <input type="email" placeholder="Email address" id="userEmail" required />
-        <input type="tel" placeholder="Phone number (optional)" id="userPhone" />
-        <button class="signup-btn" onclick="startJourney()">Get Matched Free</button>
-        <p style="text-align: center; margin-top: 15px; font-size: 0.9rem; color: var(--text-light);">
-          No commitment. Cancel anytime. Your privacy is protected.
-        </p>
-      </div>
+      <h1>Start Healing Today</h1>
+      <p>Connect with Kenyan mental health experts. Private, affordable, effective.</p>
+      <button class="cta-btn" onclick="openModal('signupModal')">Get Matched Now</button>
     </div>
   </section>
 
-  <!-- About Us -->
+  <!-- About -->
   <section class="about" id="about">
     <div class="container">
-      <h2>About MindSpace Kenya</h2>
-      <p>MindSpace is Kenya's leading online mental health platform, connecting you with licensed professionals who understand our unique challenges. From Nairobi to Mombasa, we're here to break the stigma and build stronger minds.</p>
-      <p>Founded in 2025, we've helped over 50,000 Kenyans find peace through therapy, mood tracking, and community support. Your journey starts with one conversation.</p>
-      <img src="https://images.pexels.com/photos/7746658/pexels-photo-7746658.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Kenyan community" style="width:100%; border-radius:20px; margin-top:40px; max-height:400px; object-fit:cover;" />
+      <h2>About Us</h2>
+      <p>MindSpace Kenya connects you with licensed therapists who understand our culture and challenges.</p>
+      <img src="https://images.pexels.com/photos/7746658/pexels-photo-7746658.jpeg" alt="Kenyan community support" class="section-img">
     </div>
   </section>
 
   <!-- Features -->
   <section class="features" id="features">
     <div class="container">
-      <h2 class="section-title" style="color: white; text-align:center; font-size:3.5rem;">Why Choose MindSpace?</h2>
+      <h2>Our Services</h2>
       <div class="grid">
         <div class="feature-card">
-          <img src="https://images.pexels.com/photos/5691717/pexels-photo-5691717.jpeg?auto=compress&cs=tinysrgb&w=80" alt="Therapist matching" style="border-radius:50%;" />
-          <h3>Expert Matching</h3>
-          <p>Get paired with a Kenyan therapist who specializes in your needs — anxiety, depression, relationships, and more.</p>
+          <h3>Therapy Matching</h3>
+          <p>Get paired with a specialist.</p>
         </div>
         <div class="feature-card">
-          <img src="https://images.pexels.com/photos/6646919/pexels-photo-6646919.jpeg?auto=compress&cs=tinysrgb&w=80" alt="Affordable" style="border-radius:50%;" />
-          <h3>Affordable Sessions</h3>
-          <p>Starting at KSh 1,500 per week. Financial aid available for those in need.</p>
+          <h3>Affordable Care</h3>
+          <p>From KSh 1,500/week.</p>
         </div>
         <div class="feature-card">
-          <img src="https://images.pexels.com/photos/7746658/pexels-photo-7746658.jpeg?auto=compress&cs=tinysrgb&w=80" alt="Private" style="border-radius:50%;" />
-          <h3>100% Private</h3>
-          <p>Your sessions are confidential. HIPAA-compliant and Kenya Data Protection Act approved.</p>
+          <h3>Private Sessions</h3>
+          <p>100% confidential.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Testimonials -->
-  <section class="testimonials" id="testimonials">
-    <div class="container">
-      <h2 style="font-size:3.5rem; margin-bottom:3rem;">Real Stories from Kenyans Like You</h2>
-      <div class="testimonial">
-        <p>"MindSpace gave me the space to heal from burnout. My therapist understood my Nairobi hustle perfectly."</p>
-        <p style="margin-top:15px; font-style:italic;">— Aisha, 28, Marketing Executive</p>
-      </div>
-      <div class="testimonial">
-        <p>"As a student in Kisumu, I finally found someone to talk to about exam stress. Life-changing."</p>
-        <p style="margin-top:15px; font-style:italic;">— Juma, 21, University Student</p>
-      </div>
-      <div class="testimonial">
-        <p>"After losing my job, MindSpace helped me rebuild my confidence. Grateful every day."</p>
-        <p style="margin-top:15px; font-style:italic;">— Fatuma, 35, Mother & Entrepreneur</p>
-      </div>
+  <!-- Modals -->
+  <!-- Login Modal -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('loginModal')">&times;</span>
+      <h2>Login</h2>
+      <form id="loginForm">
+        <input type="email" id="loginEmail" placeholder="Email" required>
+        <input type="password" id="loginPassword" placeholder="Password" required>
+        <button type="submit">Login</button>
+      </form>
     </div>
-  </section>
+  </div>
 
-  <!-- Tools/Dashboard -->
-  <section class="tools" id="tools">
-    <div class="container">
-      <h2 style="color:white; text-align:center; font-size:3.5rem; margin-bottom:50px;">Free Self-Help Tools</h2>
-      <div class="grid">
-        <div class="tool-card" onclick="logMood()">
-          <h3>Track Your Mood</h3>
-          <p>Log daily feelings and see your patterns.</p>
-        </div>
-        <div class="tool-card" onclick="writeJournal()">
-          <h3>Journal Privately</h3>
-          <p>Write and reflect on your thoughts safely.</p>
-        </div>
-        <div class="tool-card" onclick="breathingExercise()">
-          <h3>Breathing Exercises</h3>
-          <p>Quick calm techniques for stressful moments.</p>
-        </div>
-      </div>
-
-      <div class="tool-card" style="margin-top:40px;">
-        <h3>Your Progress</h3>
-        <canvas id="moodChart"></canvas>
-      </div>
-
-      <div class="tool-card crisis">
-        <h3>Immediate Help - Kenya</h3>
-        <p><strong>Befrienders Kenya:</strong> +254 722 201 789</p>
-        <p><strong>Red Cross Helpline:</strong> 1199</p>
-        <p><strong>Mental Health Line:</strong> 1190</p>
-        <p style="margin-top:20px; font-weight:bold;">You're not alone. Reach out now.</p>
-      </div>
+  <!-- Signup Modal -->
+  <div id="signupModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('signupModal')">&times;</span>
+      <h2>Create Account</h2>
+      <form id="signupForm">
+        <input type="text" id="signupName" placeholder="Full Name" required>
+        <input type="email" id="signupEmail" placeholder="Email" required>
+        <input type="password" id="signupPassword" placeholder="Password" required>
+        <button type="submit">Sign Up</button>
+      </form>
     </div>
-  </section>
+  </div>
 
   <footer>
     <div class="container">
-      <p>&copy; 2025 MindSpace Kenya. Licensed therapists. Secure & private.</p>
-      <p style="margin-top:10px; font-size:1.2rem;"><strong>Start feeling better today.</strong></p>
+      <p>&copy; 2025 MindSpace Kenya</p>
     </div>
   </footer>
 
-  <script>
-    function startJourney() {
-      const name = document.getElementById('userName').value;
-      const email = document.getElementById('userEmail').value;
-      if (name && email) {
-        alert(`Asante ${name}! We’ll match you with a therapist soon. Check your email at ${email}.`);
-        // In real app, send to backend
-      } else {
-        alert('Please enter your name and email to start.');
-      }
-    }
-
-    // Tools
-    const moodValues = { happy: 5, calm: 4, okay: 3, sad: 2, anxious: 1 };
-    let moods = JSON.parse(localStorage.getItem('mindspace_moods') || '[]');
-
-    function logMood() {
-      const mood = prompt("How are you feeling today?\n(happy, calm, okay, sad, anxious)").toLowerCase().trim();
-      if (['happy','calm','okay','sad','anxious'].includes(mood)) {
-        moods.push({ mood, value: moodValues[mood], date: new Date().toISOString().split('T')[0] });
-        localStorage.setItem('mindspace_moods', JSON.stringify(moods));
-        renderChart();
-        alert(`Mood logged: ${mood}. You're taking great steps!`);
-      }
-    }
-
-    function writeJournal() {
-      const text = prompt("Write your thoughts here...");
-      if (text) alert("Journal saved. Keep reflecting — it's powerful.");
-    }
-
-    function breathingExercise() {
-      alert("4-4-6 Breathing:\nInhale 4s • Hold 4s • Exhale 6s\nRepeat 5x. Feel the calm wash over you.");
-    }
-
-    function renderChart() {
-      const ctx = document.getElementById('moodChart')?.getContext('2d');
-      if (!ctx) return;
-      const last7 = moods.slice(-7).reverse();
-      new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: last7.map(d => new Date(d.date).toLocaleDateString('en-KE', { weekday: 'short' })),
-          datasets: [{
-            label: 'Your Mood',
-            data: last7.map(d => d.value),
-            borderColor: '#10b981',
-            backgroundColor: 'rgba(16, 185, 129, 0.2)',
-            tension: 0.4,
-            fill: true
-          }]
-        },
-        options: {
-          scales: { y: { min: 0, max: 6, ticks: { stepSize: 1 } } },
-          plugins: { legend: { display: false } }
-        }
-      });
-    }
-
-    renderChart();
-  </script>
+  <script src="js/app.js"></script>
 </body>
 </html>
