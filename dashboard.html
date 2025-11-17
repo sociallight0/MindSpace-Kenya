@@ -22,7 +22,7 @@
   <main class="dashboard">
     <div class="container">
       <div class="greeting">
-        <h1>Hello <span id="userName"></span>! Welcome back 😊</h1>
+        <h1>Hello <span id="userName"></span>! Welcome back</h1>
       </div>
 
       <!-- Profile Section -->
@@ -30,11 +30,11 @@
         <h2>Your Profile</h2>
         <div class="profile-card">
           <div class="profile-pic" onclick="changeProfilePic()">
-            <img id="profilePic" src="https://images.pexels.com/photos/6646919/pexels-photo-6646919.jpeg" alt="Profile Picture">
+            <img id="profilePic" src="" alt="Profile Picture">
           </div>
           <div class="profile-info">
             <p><strong>Name:</strong> <span id="profileName">Loading...</span></p>
-            <p><strong>Email:</strong> <span id="profileEmail">Loading...</span> (Locked for privacy)</p>
+            <p><strong>Email:</strong> <span id="profileEmail">Loading...</span></p>
           </div>
         </div>
       </section>
@@ -43,10 +43,29 @@
       <section class="therapist">
         <h2>Your Assigned Therapist</h2>
         <div class="therapist-card">
-          <img id="therapistPic" src="https://images.pexels.com/photos/6646919/pexels-photo-6646919.jpeg" alt="Therapist">
+          <img id="therapistPic" src="" alt="Therapist">
           <h3 id="therapistName">Dr. Aisha Mwangi</h3>
           <p>Specialist in anxiety & stress. Ready to support you.</p>
           <button onclick="bookAppointment()">Book Session</button>
+          <button onclick="openChat()" class="chat-btn">Chat with Therapist</button>
+        </div>
+      </section>
+
+      <!-- Premium Payment -->
+      <section class="payment">
+        <h2>Subscribe to Premium</h2>
+        <div class="pricing-card">
+          <h3>Premium Plan</h3>
+          <p class="price">KSh 1,500 <small>/ month</small></p>
+          <ul>
+            <li>Unlimited therapist chat</li>
+            <li>Priority booking</li>
+            <li>Journal export</li>
+          </ul>
+          <button onclick="payWithMpesa()" class="mpesa-btn">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/94/M-PESA_LOGO-01.svg" width="20" alt="M-Pesa">
+            Pay with M-PESA
+          </button>
         </div>
       </section>
 
@@ -59,18 +78,9 @@
 
       <!-- Tools Grid -->
       <div class="grid">
-        <div class="tool-card" onclick="logMood()">
-          <h3>Log Mood</h3>
-          <p>Track your feelings</p>
-        </div>
-        <div class="tool-card" onclick="writeJournal()">
-          <h3>Journal</h3>
-          <p>Write privately</p>
-        </div>
-        <div class="tool-card" onclick="breathingExercise()">
-          <h3>Breathing</h3>
-          <p>Quick calm</p>
-        </div>
+        <div class="tool-card" onclick="logMood()"> <h3>Log Mood</h3> <p>Track your feelings</p> </div>
+        <div class="tool-card" onclick="writeJournal()"> <h3>Journal</h3> <p>Write privately</p> </div>
+        <div class="tool-card" onclick="breathingExercise()"> <h3>Breathing</h3> <p>Quick calm</p> </div>
       </div>
 
       <!-- Mood Chart -->
@@ -87,6 +97,25 @@
       </div>
     </div>
   </main>
+
+  <!-- Chat Modal -->
+  <div id="chatModal" class="chat-modal">
+    <div class="chat-header">
+      <div class="therapist-info">
+        <img src="" id="chatTherapistPic" width="40">
+        <div>
+          <strong id="chatTherapistName">Dr. Aisha</strong><br>
+          <small style="color:#10b981">● Online</small>
+        </div>
+      </div>
+      <span onclick="closeChat()" style="cursor:pointer;font-size:1.5rem;">×</span>
+    </div>
+    <div id="chatMessages" class="chat-messages"></div>
+    <div class="chat-input">
+      <input type="text" id="chatInput" placeholder="Type a message..." onkeypress="if(event.key==='Enter') sendMessage()">
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
 
   <footer>
     <div class="container">
