@@ -1,206 +1,202 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sw">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Get Started - MindSpace Kenya</title>
+  <title>Tuanze - MindSpace Kenya</title>
   <link rel="stylesheet" href="css/styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .lang-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255,255,255,0.2);
+      padding: 8px 16px;
+      border-radius: 50px;
+      color: white;
+      cursor: pointer;
+      font-weight: 600;
+      backdrop-filter: blur(10px);
+    }
+    .lang-toggle span { margin: 0 8px; opacity: 0.7; }
+    .lang-toggle .active { opacity: 1; text-decoration: underline; }
+    .big-options { gap: 1.5rem; margin: 4rem 0; }
+    .option-btn { padding: 28px 20px; font-size: 1.5rem !important; }
+    h1 { font-size: 3rem !important; }
+  </style>
 </head>
 <body class="getstarted-page">
+
+  <div class="lang-toggle">
+    <span class="lang-en active" onclick="setLanguage('en')">English</span> |
+    <span class="lang-sw" onclick="setLanguage('sw')">Kiswahili</span>
+  </div>
 
   <header class="simple-header">
     <div class="container">
       <div class="logo">MindSpace Kenya</div>
-      <a href="login.html" class="text-link">Already have an account? Log in</a>
+      <a href="login.html" class="text-link">Tayari una akaunti? Ingia</a>
     </div>
   </header>
 
   <main class="getstarted-container">
     <div class="progress-container">
-      <div class="progress-bar">
-        <div class="progress-fill" id="progressFill"></div>
-      </div>
-      <p><span id="currentStep">1</span> of 6</p>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <p><span id="currentStep">1</span> kati ya 6</p>
     </div>
 
     <div class="question-card">
       <!-- STEP 1 -->
       <div id="step1" class="step active">
-        <h1>Let's find the right therapist for you</h1>
-        <p class="subtitle">First, what should we call you?</p>
-        <input type="text" id="userNameInput" placeholder="Your full name" class="big-input" autofocus>
-        <button onclick="saveNameAndNext()" class="primary-btn">Continue</button>
+        <h1 data-en="Let's find the right therapist for you" data-sw="Hebu tukupatie mtaalamu anayekufaa">Let's find the right therapist for you</h1>
+        <p class="subtitle" data-en="First, what should we call you?" data-sw="Kwanza, tunakuitaje?">First, what should we call you?</p>
+        <input type="text" id="userNameInput" placeholder="jina lako kamili / your full name" class="big-input" autofocus>
+        <button onclick="saveNameAndNext()" class="primary-btn">Endelea / Continue</button>
       </div>
 
       <!-- STEP 2 -->
       <div id="step2" class="step">
-        <h1>What's bringing you here today?</h1>
-        <p class="subtitle">Select all that apply</p>
+        <h1 data-en="What's bringing you here today?" data-sw="Ni nini kinakuleta hapa leo?">What's bringing you here today?</h1>
+        <p class="subtitle" data-en="Select all that apply" data-sw="Chagua yote yanayokuhusu">Select all that apply</p>
         <div class="options-grid">
-          <label><input type="checkbox" value="Stress & Anxiety"> Stress & Anxiety</label>
-          <label><input type="checkbox" value="Depression"> Depression</label>
-          <label><input type="checkbox" value="Relationships"> Relationships</label>
-          <label><input type="checkbox" value="Family Conflict"> Family Conflict</label>
-          <label><input type="checkbox" value="Grief"> Grief & Loss</label>
-          <label><input type="checkbox" value="Trauma"> Trauma</label>
-          <label><input type="checkbox" value="Self-esteem"> Self-esteem</label>
-          <label><input type="checkbox" value="Work Stress"> Work Stress</label>
+          <label><input type="checkbox" value="Stress & Anxiety"><span data-en="Stress & Anxiety" data-sw="Wasiwasi na Msongo">Stress & Anxiety</span></label>
+          <label><input type="checkbox" value="Depression"><span data-en="Depression" data-sw="Unenyegevunyevu / Kukosa moyo">Depression</span></label>
+          <label><input type="checkbox" value="Relationships"><span data-en="Relationships" data-sw="Mahusiano">Relationships</span></label>
+          <label><input type="checkbox" value="Family Conflict"><span data-en="Family Conflict" data-sw="Migogoro ya Familia">Family Conflict</span></label>
+          <label><input type="checkbox" value="Grief"><span data-en="Grief & Loss" data-sw="Huzuni na Msiba">Grief & Loss</span></label>
+          <label><input type="checkbox" value="Trauma"><span data-en="Trauma" data-sw="Jeraha la Moyo">Trauma</span></label>
+          <label><input type="checkbox" value="Self-esteem"><span data-en="Self-esteem" data-sw="Kujistahi">Self-esteem</span></label>
+          <label><input type="checkbox" value="Work Stress"><span data-en="Work Stress" data-sw="Msongo wa Kazi">Work Stress</span></label>
         </div>
-        <button onclick="nextStep(3)" class="primary-btn">Continue</button>
+        <button onclick="nextStep(3)" class="primary-btn">Endelea / Continue</button>
       </div>
 
       <!-- STEP 3 -->
       <div id="step3" class="step">
-        <h1>Have you been in therapy before?</h1>
+        <h1 data-en="Have you ever attended therapy before?" data-sw="Umewahi kupata ushauri nasaha wa kitaalamu hapo awali?">Have you ever attended therapy before?</h1>
+        <p class="subtitle" data-en="This helps us match you better" data-sw="Hii inatusaidia kukupatia mtaalamu anayefaa zaidi">This helps us match you better</p>
         <div class="big-options">
-          <button onclick="setAnswer('therapyBefore', 'Yes'); nextStep(4)" class="option-btn">Yes</button>
-          <button onclick="setAnswer('therapyBefore', 'No'); nextStep(4)" class="option-btn">No</button>
-          <button onclick="setAnswer('therapyBefore', 'Not sure'); nextStep(4)" class="option-btn">Not sure</button>
+          <button onclick="selectOption(this); setAnswer('therapyBefore', 'Ndiyo'); nextStep(4)" class="option-btn">Ndiyo</button>
+          <button onclick="selectOption(this); setAnswer('therapyBefore', 'Hapana'); nextStep(4)" class="option-btn">Hapana</button>
+          <button onclick="selectOption(this); setAnswer('therapyBefore', 'Sijui'); nextStep(4)" class="option-btn">Sijui</button>
         </div>
       </div>
 
       <!-- STEP 4 -->
       <div id="step4" class="step">
-        <h1>Which describes you best?</h1>
+        <h1 data-en="Which describes you best?" data-sw="Unajielezeaje?">Which describes you best?</h1>
+        <p class="subtitle" data-en="We respect all identities" data-sw="Tunaheshimu utambulisho wako wote">We respect all identities</p>
         <div class="big-options">
-          <button onclick="setAnswer('gender', 'Male'); nextStep(5)" class="option-btn">Male</button>
-          <button onclick="setAnswer('gender', 'Female'); nextStep(5)" class="option-btn">Female</button>
-          <button onclick="setAnswer('gender', 'Non-binary'); nextStep(5)" class="option-btn">Non-binary</button>
-          <button onclick="setAnswer('gender', 'Prefer not to say'); nextStep(5)" class="option-btn">Prefer not to say</button>
+          <button onclick="selectOption(this); setAnswer('gender', 'Mwanaume'); nextStep(5)" class="option-btn">Mwanaume</button>
+          <button onclick="selectOption(this); setAnswer('gender', 'Mwanamke'); nextStep(5)" class="option-btn">Mwanamke</button>
+          <button onclick="selectOption(this); setAnswer('gender', 'Sio wa jinsia mbili'); nextStep(5)" class="option-btn">Sio wa jinsia mbili</button>
+          <button onclick="selectOption(this); setAnswer('gender', 'Sitaki kusema'); nextStep(5)" class="option-btn">Sitaki kusema</button>
         </div>
       </div>
 
       <!-- STEP 5 -->
       <div id="step5" class="step">
-        <h1>What's your phone number?</h1>
-        <p class="subtitle">We’ll send you a confirmation code (Kenya only)</p>
+        <h1 data-en="What's your phone number?" data-sw="Nambari yako ya simu ni ipi?">What's your phone number?</h1>
+        <p class="subtitle" data-en="We’ll send a confirmation code (Kenya only)" data-sw="Tutakutumia nambari ya uthibitisho (Kenya pekee)">We’ll send a confirmation code (Kenya only)</p>
         <input type="tel" id="phoneInput" placeholder="0712345678" class="big-input" maxlength="10">
-        <button onclick="nextStep(6)" class="primary-btn">Send Code</button>
+        <button onclick="nextStep(6)" class="primary-btn">Tuma Nambari / Send Code</button>
       </div>
 
       <!-- STEP 6 -->
       <div id="step6" class="step">
-        <h1>You're almost there!</h1>
-        <p class="subtitle">Create a secure password to protect your account</p>
-        <input type="password" id="passwordInput" placeholder="Choose a strong password" class="big-input">
-        <input type="password" id="confirmPassword" placeholder="Confirm password" class="big-input" style="margin-top:12px;">
-        <button onclick="completeSignup()" class="primary-btn">Create My Account</button>
-        <p class="secure-note">By continuing, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a></p>
+        <h1 data-en="You're almost there!" data-sw="Umekaribia kumaliza!">You're almost there!</h1>
+        <p class="subtitle" data-en="Create a secure password" data-sw="Unda neno la siri salama">Create a secure password</p>
+        <input type="password" id="passwordInput" placeholder="Chagua neno la siri / Choose password" class="big-input">
+        <input type="password" id="confirmPassword" placeholder="Thibitisha neno la siri / Confirm password" class="big-input" style="margin-top:16px;">
+        <button onclick="completeSignup()" class="primary-btn">Fungua Akaunti Yangu</button>
+        <p class="secure-note">Kwa kuendelea, unakubali <a href="#">Sheria na Masharti</a> yetu na <a href="#">Sera ya Faragha</a></p>
       </div>
     </div>
 
     <div class="trust-badges">
-      <p>Trusted by thousands of Kenyans</p>
+      <p data-en="Trusted by thousands of Kenyans" data-sw="Imeaminiwa na maelfu ya Wakenya">Trusted by thousands of Kenyans</p>
       <div class="badges">
-        <span>100% Confidential</span>
-        <span>Licensed Therapists</span>
-        <span>Affordable Plans</span>
+        <span>100% ya Faragha</span>
+        <span>Wataalamu Wenye Leseni</span>
+        <span>Bima nafuu</span>
       </div>
     </div>
   </main>
 
-  <!-- FIXED SCRIPT -->
   <script>
-    let assessmentData = {
-      name: '',
-      concerns: [],
-      therapyBefore: '',
-      gender: '',
-      phone: '',
-      password: ''
-    };
-
+    let assessmentData = { name: '', concerns: [], therapyBefore: '', gender: '', phone: '', password: '' };
     let currentStep = 1;
     const totalSteps = 6;
 
-    // Step 1 – Save name and move forward
+    function setLanguage(lang) {
+      document.querySelectorAll('[data-en],[data-sw]').forEach(el => {
+        el.textContent = el.getAttribute(`data-${lang}`);
+      });
+      document.querySelectorAll('.lang-toggle span').forEach(s => s.classList.remove('active'));
+      document.querySelector(`.lang-${lang}`).classList.add('active');
+      document.documentElement.lang = lang;
+    }
+
     function saveNameAndNext() {
       const name = document.getElementById('userNameInput').value.trim();
-      if (!name) {
-        alert('Please enter your name');
-        return;
-      }
+      if (!name) return alert('Tafadhali andika jina lako');
       assessmentData.name = name;
       nextStep(2);
     }
 
     function nextStep(step) {
-      // Validate current step before moving
       if (currentStep === 2) {
-        const checked = document.querySelectorAll('#step2 input[type="checkbox"]:checked');
-        assessmentData.concerns = Array.from(checked).map(c => c.value);
-        if (assessmentData.concerns.length === 0) {
-          alert('Please select at least one concern');
-          return;
-        }
+        const checked = document.querySelectorAll('#step2 input:checked');
+        assessmentData.concerns = Array.from(checked).map(c => c.nextElementSibling.textContent);
+        if (!assessmentData.concerns.length) return alert('Tafadhali chagua angalau moja');
       }
-
       if (currentStep === 5) {
         const phone = document.getElementById('phoneInput').value.trim();
-        if (!/^07\d{8}$/.test(phone)) {
-          alert('Please enter a valid Kenyan mobile number (07xxxxxxxx)');
-          return;
-        }
+        if (!/^07\d{8}$/.test(phone)) return alert('Tafadhali ingiza nambari sahihi ya Kenya');
         assessmentData.phone = phone;
       }
 
-      // Hide current, show next
       document.getElementById(`step${currentStep}`).classList.remove('active');
       document.getElementById(`step${step}`).classList.add('active');
       currentStep = step;
-      updateProgress();
-    }
-
-    function setAnswer(key, value) {
-      assessmentData[key] = value;
-    }
-
-    function updateProgress() {
       document.getElementById('currentStep').textContent = currentStep;
-      const percentage = (currentStep / totalSteps) * 100;
-      document.getElementById('progressFill').style.width = percentage + '%';
+      document.getElementById('progressFill').style.width = (currentStep / totalSteps) * 100 + '%';
     }
+
+    function selectOption(btn) {
+      btn.parentElement.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+    }
+
+    function setAnswer(key, value) { assessmentData[key] = value; }
 
     function completeSignup() {
-      const password = document.getElementById('passwordInput').value;
+      const pass = document.getElementById('passwordInput').value;
       const confirm = document.getElementById('confirmPassword').value;
+      if (pass.length < 6) return alert('Neno la siri lazima liwe na angalau herufi 6');
+      if (pass !== confirm) return alert('Maneno ya siri hayalingani');
 
-      if (password.length < 6) return alert('Password must be at least 6 characters');
-      if (password !== confirm) return alert('Passwords do not match');
-
-      assessmentData.password = password;
-
-      // Save user (same system as before)
-      let users = JSON.parse(localStorage.getItem('mindspace_users') || '[]');
+      assessmentData.password = pass;
       const email = assessmentData.phone + '@mindspace.co.ke';
+      let users = JSON.parse(localStorage.getItem('mindspace_users') || '[]');
 
       if (users.some(u => u.email === email)) {
-        alert('This phone number is already registered. Please log in.');
-        window.location.href = 'login.html';
-        return;
+        alert('Nambari hii tayari imesajiliwa!');
+        return window.location.href = 'login.html';
       }
 
-      const newUser = {
-        name: assessmentData.name,
-        email: email,
-        password: assessmentData.password,
-        phone: assessmentData.phone,
-        concerns: assessmentData.concerns,
-        verified: true
-      };
-
-      users.push(newUser);
+      users.push({ name: assessmentData.name, email, password: pass, phone: assessmentData.phone, verified: true });
       localStorage.setItem('mindspace_users', JSON.stringify(users));
-      localStorage.setItem('mindspace_user', JSON.stringify({ name: newUser.name, email: newUser.email }));
+      localStorage.setItem('mindspace_user', JSON.stringify({ name: assessmentData.name, email }));
       localStorage.setItem('user_assessment', JSON.stringify(assessmentData));
 
-      alert(`Welcome to MindSpace Kenya, ${assessmentData.name}! We're matching you with a therapist now...`);
+      alert(`Karibu sana ${assessmentData.name}! Tunakutafutia mtaalamu sasa hivi`);
       window.location.href = 'dashboard.html';
     }
 
-    // Initialize
-    updateProgress();
+    // Auto-detect Swahili users
+    if (navigator.language.startsWith('sw') || localStorage.getItem('lang') === 'sw') setLanguage('sw');
   </script>
 </body>
 </html>
