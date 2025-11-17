@@ -129,39 +129,48 @@ function changePic(url) {
   document.getElementById('headerPic').src = url;
 }
 
-// Save all changes
 function saveProfileChanges() {
   const newName = document.getElementById('editName').value.trim();
-  const newUsername = document.getElementById('editUsername').value.trim().replace('@', '');
+  const rawUsername = document.getElementById('editUsername').value.trim().toLowerCase().replace(/[^a-z0-9_]/g, '');
+  const newUsername = '@' + rawUsername;
   const newPhone = document.getElementById('editPhone').value.trim();
 
-  if (!newName || !newUsername) {
-    alert('Name and username are required');
+  if (!newName || rawUsername.length < 3) {
+    alert('Name and username (min 3 chars) are required');
     return;
   }
 
-  const user = JSON.parse(localStorage.getItem('mindspace_user'));
-  user.name = newName;
-  user.phone = newPhone;
+  // CHECK IF USERNAME IS ALREADY TAKEN
+  const allUsers = JSON.parse(localStorage.getItem('mindspace_users') || '[]');
+  const currentUser = JSON.parse(localStorage.getItem('mindspace_user'));
+  const oldUsername = localStorage.getItem('user_username') || '';
 
-  localStorage.setItem('mindspace_user', JSON.stringify(user));
-  localStorage.setItem('user_username', '@' + newUsername);
+  const usernameTaken = allUsers.some(u => 
+    (localStorage.getItem('user_username') || '@' + u.email.split('@')[0]) === newUsername &&
+    u.email !== currentUser.email
+  );
 
-  alert('Profile updated successfully!');
-  closeEditModal();
-  loadUserProfile(); // Refresh header
-  location.reload(); // Optional: refresh page
-}
-
-// Close dropdown when clicking outside
-window.onclick = function(e) {
-  if (!e.target.closest('.profile-trigger') && !e.target.closest('.dropdown-menu')) {
-    document.getElementById('dropdownMenu')?.classList.remove('show');
+  if (usernameTaken && oldUsername !== newUsername) {
+    alert('Sorry, @' + rawUsername + ' is already taken. Choose another!');
+    return;
   }
-}
 
-// Call on page load
-document.addEventListener('DOMContentLoaded', loadUserProfile);
+  // Save updated user
+  currentUser.name = newName;
+  currentUser.phone = newPhone;
+
+  // Update in all users list
+  const userIndex = allUsers.findIndex(u => u.email === currentUser.email);
+  if (userIndex !== -1) allUsers[userIndex] = { ...allUsers[userIndex], name: newName, phone: newPhone };
+
+  localStorage.setItem('mindspace_user', JSON.stringify(currentUser));
+  localStorage.setItem('mindspace_users', JSON.stringify(allUsers));
+  localStorage.setItem('user_username', newUsername);
+
+  alert(`Profile updated! Your new username is ${newUsername}`);
+  closeEditModal();
+  loadUserProfile();
+  setTimeout(() => location.reload(), 800);
 }
 
 function loadDashboard() {
