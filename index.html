@@ -1,71 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MindSpace Kenya - Start Your Journey</title>
-  <link rel="stylesheet" href="css/styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="MindSpace Kenya – Connect with licensed Kenyan therapists for private, affordable, and culturally-relevant mental health support." />
+  <meta name="keywords" content="mental health Kenya, therapy Kenya, online therapy, affordable therapy" />
+  <meta name="author" content="MindSpace Kenya" />
+
+  <title>MindSpace Kenya – Start Your Healing Journey Today</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <!-- Favicon (recommended to add) -->
+  <!-- <link rel="icon" href="favicon.ico" type="image/x-icon" /> -->
 </head>
+
 <body>
-  <header>
-    <nav class="container">
-      <div class="logo">MindSpace Kenya</div>
-      <div class="nav-links">
-        <a href="#about">About</a>
-        <a href="#features">Features</a>
-        <a href="login.html">Login</a>
-        <a href="signup.html">Sign Up</a>
-        <a href="getstarted.html" class="cta-btn">Get Matched Now</a>
+  <!-- Header & Navigation -->
+  <header class="header">
+    <nav class="container nav">
+      <div class="logo">
+        <a href="index.html">MindSpace Kenya</a>
       </div>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="signup.html">Sign Up</a></li>
+        <li><a href="getstarted.html" class="cta-btn">Get Matched Now</a></li>
+      </ul>
+
+      <!-- Mobile menu toggle (optional – add JS if you want hamburger) -->
+      <button class="mobile-toggle" aria-label="Toggle menu">☰</button>
     </nav>
   </header>
 
-  <!-- Hero -->
+  <!-- Hero Section -->
   <section class="hero">
-    <div class="container">
+    <div class="container hero-content">
       <h1>Start Healing Today</h1>
-      <p>Connect with Kenyan mental health experts. Private, affordable, effective.</p>
-      <a href="signup.html" class="cta-btn">Get Matched Now</a>
+      <p>Connect with licensed Kenyan mental health experts. Private, affordable, effective.</p>
+      <a href="signup.html" class="cta-btn large">Get Matched Now</a>
     </div>
   </section>
 
-  <!-- About -->
+  <!-- About Section -->
   <section class="about" id="about">
     <div class="container">
-      <h2>About Us</h2>
-      <p>MindSpace Kenya connects you with licensed therapists who understand our culture and challenges.</p>
-      <img src="https://images.pexels.com/photos/7746658/pexels-photo-7746658.jpeg" alt="Kenyan community support" class="section-img">
+      <h2>About MindSpace Kenya</h2>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>MindSpace Kenya connects you with licensed therapists who deeply understand Kenyan culture, languages, and the unique challenges we face.</p>
+          <p>We believe mental health care should be accessible, stigma-free, and tailored to you.</p>
+        </div>
+        <img 
+          src="https://images.pexels.com/photos/7746658/pexels-photo-7746658.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" 
+          alt="Kenyan community support group" 
+          class="section-img"
+          loading="lazy"
+        >
+      </div>
     </div>
   </section>
 
-  <!-- Features -->
+  <!-- Features / Services -->
   <section class="features" id="features">
     <div class="container">
-      <h2>Our Services</h2>
+      <h2>Why Choose Us</h2>
       <div class="grid">
         <div class="feature-card">
-          <h3>Therapy Matching</h3>
-          <p>Get paired with a specialist.</p>
+          <div class="icon">🎯</div>
+          <h3>Smart Therapy Matching</h3>
+          <p>We pair you with a licensed specialist who fits your needs, background, and preferences.</p>
         </div>
         <div class="feature-card">
+          <div class="icon">💰</div>
           <h3>Affordable Care</h3>
-          <p>From KSh 1,500/week.</p>
+          <p>Sessions from as low as <strong>KSh 1,500 per week</strong> – no hidden fees.</p>
         </div>
         <div class="feature-card">
-          <h3>Private Sessions</h3>
-          <p>100% confidential.</p>
+          <div class="icon">🔒</div>
+          <h3>100% Private & Confidential</h3>
+          <p>Your privacy is our priority. All sessions are encrypted and completely confidential.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <footer>
+  <!-- Footer -->
+  <footer class="footer">
     <div class="container">
-      <p>&copy; 2025 MindSpace Kenya</p>
+      <p>&copy; <span id="year"></span> MindSpace Kenya. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="privacy.html">Privacy Policy</a> • 
+        <a href="terms.html">Terms of Service</a> • 
+        <a href="contact.html">Contact Us</a>
+      </div>
     </div>
   </footer>
 
+  <!-- Scripts -->
   <script src="js/app.js"></script>
+  <script>
+    // Auto-update copyright year
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
