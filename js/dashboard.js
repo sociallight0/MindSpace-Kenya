@@ -348,3 +348,172 @@ if (document.readyState === 'loading') {
 } else {
     initDashboard();
 }
+  // Initialize Lucide icons
+        lucide.createIcons();
+
+        // User data management
+        let userData = {
+            name: 'Guest User',
+            email: 'user@mindspace.co.ke',
+            phone: '+254 712 345 678',
+            profilePic: 'https://ui-avatars.com/api/?name=Guest+User&background=10b981&color=fff&size=200',
+            joinDate: new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' }),
+            sessions: 12,
+            appointments: []
+        };
+
+        const profilePicOptions = [
+            'https://ui-avatars.com/api/?name=User+1&background=10b981&color=fff&size=200',
+            'https://ui-avatars.com/api/?name=User+2&background=059669&color=fff&size=200',
+            'https://ui-avatars.com/api/?name=User+3&background=064e3b&color=fff&size=200',
+            'https://ui-avatars.com/api/?name=User+4&background=6366f1&color=fff&size=200',
+            'https://ui-avatars.com/api/?name=User+5&background=8b5cf6&color=fff&size=200',
+            'https://ui-avatars.com/api/?name=User+6&background=ec4899&color=fff&size=200'
+        ];
+
+        const sampleAppointments = [
+            { therapist: 'Dr. Amina Hassan', specialty: 'Anxiety & Stress', date: 'Today, 2:00 PM', status: 'upcoming' },
+            { therapist: 'Dr. John Kamau', specialty: 'Depression', date: 'Tomorrow, 10:00 AM', status: 'upcoming' }
+        ];
+
+        function loadUserData() {
+            const storedUser = localStorage.getItem('mindspace_user');
+            if (storedUser) {
+                try {
+                    const parsedUser = JSON.parse(storedUser);
+                    userData = { ...userData, ...parsedUser };
+                } catch (e) {
+                    console.error('Error loading user data');
+                }
+            }
+            userData.appointments = sampleAppointments;
+        }
+
+        function updateUI() {
+            document.getElementById('headerProfilePic').src = userData.profilePic;
+            document.getElementById('headerUserName').textContent = userData.name;
+            document.getElementById('welcomeText').textContent = `Welcome back, ${userData.name.split(' ')[0]}!`;
+            document.getElementById('joinDate').textContent = userData.joinDate;
+            document.getElementById('sessionsCount').textContent = userData.sessions;
+            document.getElementById('profilePic').src = userData.profilePic;
+            document.getElementById('profileName').textContent = userData.name;
+            document.getElementById('profileEmail').textContent = userData.email;
+            document.getElementById('modalProfilePic').src = userData.profilePic;
+            document.getElementById('inputName').value = userData.name;
+            document.getElementById('inputEmail').value = userData.email;
+            document.getElementById('inputPhone').value = userData.phone;
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            lucide.createIcons();
+        }
+
+        function renderAppointments() {
+            const container = document.getElementById('appointmentsList');
+            container.innerHTML = userData.appointments.map(apt => `
+                <div class="bg-emerald-50 rounded-xl p-4 mb-3 border-l-4 border-emerald-500">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h4 class="font-bold text-emerald-900">${apt.therapist}</h4>
+                            <p class="text-sm text-gray-600">${apt.specialty}</p>
+                            <p class="text-sm text-emerald-600 mt-2">📅 ${apt.date}</p>
+                        </div>
+                        <span class="bg-emerald-600 text-white px-3 py-1 rounded-full text-xs font-semibold">${apt.status}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderMoodChart() {
+            const container = document.getElementById('moodChart');
+            const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+            const scores = [3.5, 4.2, 3.8, 4.5, 4.0, 4.3, 4.7];
+            container.innerHTML = days.map((day, i) => `
+                <div class="flex flex-col items-center gap-2 flex-1">
+                    <div class="w-full bg-emerald-200 rounded-t-lg transition-all hover:bg-emerald-300" style="height: ${(scores[i]/5)*100}%"></div>
+                    <span class="text-xs text-gray-600">${day}</span>
+                </div>
+            `).join('');
+        }
+
+        function renderProfilePicOptions() {
+            const container = document.getElementById('profilePicOptions');
+            container.innerHTML = profilePicOptions.map(pic => `
+                <img src="${pic}" alt="Profile" class="w-16 h-16 rounded-full cursor-pointer border-2 border-gray-300 hover:border-emerald-500 transition-all" onclick="selectProfilePic('${pic}')">
+            `).join('');
+        }
+
+        function selectProfilePic(pic) {
+            userData.profilePic = pic;
+            document.getElementById('modalProfilePic').src = pic;
+        }
+
+        document.getElementById('editProfileBtn').addEventListener('click', () => {
+            document.getElementById('editModal').classList.remove('hidden');
+            renderProfilePicOptions();
+        });
+
+        document.getElementById('closeModal').addEventListener('click', () => {
+            document.getElementById('editModal').classList.add('hidden');
+        });
+
+        document.getElementById('saveProfile').addEventListener('click', () => {
+            userData.name = document.getElementById('inputName').value.trim();
+            userData.email = document.getElementById('inputEmail').value.trim();
+            userData.phone = document.getElementById('inputPhone').value.trim();
+            
+            if (!userData.name || !userData.email) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            localStorage.setItem('mindspace_user', JSON.stringify(userData));
+            updateUI();
+            document.getElementById('editModal').classList.add('hidden');
+            alert('Profile updated successfully!');
+        });
+
+        // AI Chat
+        document.getElementById('aiChatTrigger').addEventListener('click', () => {
+            const popup = document.getElementById('aiChatPopup');
+            popup.classList.remove('hidden');
+            popup.classList.add('flex');
+        });
+
+        document.getElementById('closeChatBtn').addEventListener('click', () => {
+            const popup = document.getElementById('aiChatPopup');
+            popup.classList.add('hidden');
+            popup.classList.remove('flex');
+        });
+
+        document.getElementById('aiChatBtn').addEventListener('click', () => {
+            document.getElementById('aiChatTrigger').click();
+        });
+
+        document.getElementById('sendMessageBtn').addEventListener('click', () => {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            if (!message) return;
+            
+            const container = document.getElementById('chatMessages');
+            container.innerHTML += `<div class="bg-emerald-600 text-white rounded-lg p-3 mb-2 ml-auto max-w-[80%]">${message}</div>`;
+            input.value = '';
+            
+            setTimeout(() => {
+                container.innerHTML += `<div class="bg-gray-200 text-gray-800 rounded-lg p-3 mb-2 mr-auto max-w-[80%]">Thank you for sharing. How can I help you today?</div>`;
+                container.scrollTop = container.scrollHeight;
+            }, 1000);
+        });
+
+        document.getElementById('chatInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                document.getElementById('sendMessageBtn').click();
+            }
+        });
+
+        // Initialize
+        loadUserData();
+        updateUI();
+        renderAppointments();
+        renderMoodChart();
+        
+        // Add welcome message to chat
+        document.getElementById('chatMessages').innerHTML = `<div class="bg-gray-200 text-gray-800 rounded-lg p-3 mb-2 mr-auto max-w-[80%]">Hello! I'm your AI support assistant. How can I help you today?</div>`;
