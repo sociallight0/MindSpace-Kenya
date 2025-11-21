@@ -1,81 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="MindSpace Kenya – Connect with licensed Kenyan therapists for private, affordable, and culturally-relevant mental health support." />
-  <title>MindSpace Kenya – Start Your Healing Journey Today</title>
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MindSpace Kenya - Start Your Healing Journey Today</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --jungle: #064e3b;
-      --jungle-light: #059669;
-      --jungle-bg: linear-gradient(135deg, #064e3b 0%, #047857 50%, #065f46 100%);
-      --card-bg: rgba(255, 255, 255, 0.95);
-      --text: #0f172a;
-      --text-light: #475569;
-      --accent: #10b981;
-    }
-
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
-    body { 
-      font-family: 'Poppins', sans-serif; 
-      background: var(--jungle-bg); 
-      color: var(--text); 
-      line-height: 1.7; 
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #064e3b 0%, #047857 50%, #065f46 100%);
+      color: #0f172a;
+      line-height: 1.7;
     }
 
-    .container { 
-      max-width: 1200px; 
-      margin: 0 auto; 
-      padding: 20px; 
-    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
-    /* Header & Navigation */
-    header { 
-      background: rgba(6, 78, 59, 0.98); 
-      padding: 1.2rem 0; 
-      position: sticky; 
-      top: 0; 
-      z-index: 100; 
+    /* Header */
+    header {
+      background: rgba(6, 78, 59, 0.98);
+      padding: 1.2rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
       box-shadow: 0 4px 20px rgba(0,0,0,0.15);
     }
 
-    nav { 
-      display: flex; 
-      justify-content: space-between; 
-      align-items: center; 
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       flex-wrap: wrap;
     }
 
-    .logo { 
-      font-size: 2rem; 
-      font-weight: 700; 
-      color: white; 
+    .logo {
+      font-size: 2rem;
+      font-weight: 700;
+      color: white;
       font-family: 'Sora', sans-serif;
-      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
-    .nav-links { 
-      display: flex; 
-      align-items: center; 
-      gap: 2rem; 
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
       list-style: none;
     }
 
-    .nav-links a { 
-      color: white; 
-      text-decoration: none; 
+    .nav-links a {
+      color: white;
+      text-decoration: none;
       font-weight: 500;
       transition: color 0.3s;
     }
 
-    .nav-links a:hover {
-      color: var(--accent);
-    }
+    .nav-links a:hover { color: #10b981; }
 
-    /* Button Styles */
     .btn {
       padding: 14px 32px;
       border: none;
@@ -90,7 +74,7 @@
     }
 
     .btn-primary {
-      background: var(--accent);
+      background: #10b981;
       color: white;
       box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
     }
@@ -101,17 +85,6 @@
       box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
     }
 
-    .btn-secondary {
-      background: white;
-      color: var(--jungle);
-      border: 2px solid white;
-    }
-
-    .btn-secondary:hover {
-      background: transparent;
-      color: white;
-    }
-
     .btn-outline {
       background: transparent;
       color: white;
@@ -120,35 +93,32 @@
 
     .btn-outline:hover {
       background: white;
-      color: var(--jungle);
+      color: #064e3b;
     }
 
-    /* Hero Section */
-    .hero { 
-      padding: 120px 20px; 
-      text-align: center; 
-      color: white; 
+    /* Hero */
+    .hero {
+      padding: 120px 20px;
+      text-align: center;
+      color: white;
       min-height: 85vh;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    .hero-content {
-      max-width: 900px;
-      margin: 0 auto;
-    }
+    .hero-content { max-width: 900px; margin: 0 auto; }
 
-    .hero h1 { 
-      font-size: 4.5rem; 
-      margin-bottom: 1.5rem; 
-      font-family: 'Sora', sans-serif; 
+    .hero h1 {
+      font-size: 4.5rem;
+      margin-bottom: 1.5rem;
+      font-family: 'Sora', sans-serif;
       line-height: 1.2;
       animation: fadeInUp 0.8s ease-out;
     }
 
-    .hero p { 
-      font-size: 1.6rem; 
+    .hero p {
+      font-size: 1.6rem;
       margin-bottom: 3rem;
       color: rgba(255, 255, 255, 0.95);
       animation: fadeInUp 1s ease-out;
@@ -162,17 +132,79 @@
       animation: fadeInUp 1.2s ease-out;
     }
 
-    /* About Section */
-    .about { 
-      padding: 100px 20px; 
+    /* Health Images Section */
+    .health-images {
       background: white;
+      padding: 80px 20px;
     }
 
-    .about h2 { 
-      font-size: 3.5rem; 
-      text-align: center; 
-      margin-bottom: 3rem; 
-      color: var(--jungle);
+    .health-images h2 {
+      font-size: 3rem;
+      text-align: center;
+      margin-bottom: 3rem;
+      color: #064e3b;
+      font-family: 'Sora', sans-serif;
+    }
+
+    .image-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .image-card {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      transition: transform 0.3s ease;
+    }
+
+    .image-card:hover {
+      transform: translateY(-10px);
+    }
+
+    .image-card img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .image-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(6, 78, 59, 0.9), transparent);
+      color: white;
+      padding: 20px;
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+    }
+
+    .image-card:hover .image-overlay {
+      transform: translateY(0);
+    }
+
+    .image-overlay h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    /* About Section */
+    .about {
+      padding: 100px 20px;
+      background: #f8fafc;
+    }
+
+    .about h2 {
+      font-size: 3.5rem;
+      text-align: center;
+      margin-bottom: 3rem;
+      color: #064e3b;
       font-family: 'Sora', sans-serif;
     }
 
@@ -185,49 +217,48 @@
 
     .about-text p {
       font-size: 1.2rem;
-      color: var(--text-light);
+      color: #475569;
       margin-bottom: 1.5rem;
       line-height: 1.8;
     }
 
-    .section-img { 
-      width: 100%; 
-      border-radius: 20px; 
+    .section-img {
+      width: 100%;
+      border-radius: 20px;
       box-shadow: 0 20px 60px rgba(0,0,0,0.15);
     }
 
-    /* Features Section */
-    .features { 
-      padding: 100px 20px; 
-      background: var(--jungle-bg);
+    /* Features */
+    .features {
+      padding: 100px 20px;
+      background: linear-gradient(135deg, #064e3b 0%, #047857 100%);
     }
 
-    .features h2 { 
-      font-size: 3.5rem; 
-      text-align: center; 
-      margin-bottom: 4rem; 
+    .features h2 {
+      font-size: 3.5rem;
+      text-align: center;
+      margin-bottom: 4rem;
       color: white;
       font-family: 'Sora', sans-serif;
     }
 
-    .grid { 
-      display: grid; 
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
-      gap: 2.5rem; 
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2.5rem;
     }
 
-    .feature-card { 
-      background: white; 
-      padding: 3rem 2.5rem; 
-      border-radius: 20px; 
-      text-align: center; 
+    .feature-card {
+      background: white;
+      padding: 3rem 2.5rem;
+      border-radius: 20px;
+      text-align: center;
       box-shadow: 0 15px 40px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition: transform 0.3s ease;
     }
 
     .feature-card:hover {
       transform: translateY(-10px);
-      box-shadow: 0 20px 50px rgba(16, 185, 129, 0.2);
     }
 
     .icon {
@@ -237,78 +268,107 @@
 
     .feature-card h3 {
       font-size: 1.8rem;
-      color: var(--jungle);
+      color: #064e3b;
       margin-bottom: 1rem;
       font-family: 'Sora', sans-serif;
     }
 
     .feature-card p {
       font-size: 1.1rem;
-      color: var(--text-light);
+      color: #475569;
       line-height: 1.7;
     }
 
     /* Footer */
-    footer { 
-      background: rgba(6, 78, 59, 0.98); 
-      color: white; 
-      text-align: center; 
-      padding: 3rem 1rem; 
-    }
-
-    .footer-links {
-      margin-top: 1.5rem;
-    }
-
-    .footer-links a {
+    footer {
+      background: rgba(6, 78, 59, 0.98);
       color: white;
+      padding: 3rem 1rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-section h4 {
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .footer-section p, .footer-section a {
+      color: rgba(255, 255, 255, 0.8);
       text-decoration: none;
-      margin: 0 1rem;
+      display: block;
+      margin-bottom: 0.5rem;
       transition: color 0.3s;
     }
 
-    .footer-links a:hover {
-      color: var(--accent);
+    .footer-section a:hover {
+      color: #10b981;
     }
 
-    /* Animations */
+    .social-icons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .social-icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+
+    .social-icon:hover {
+      background: #10b981;
+      transform: translateY(-3px);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      padding-top: 2rem;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
     @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Mobile Responsive */
     @media (max-width: 768px) {
       .hero h1 { font-size: 2.8rem; }
       .hero p { font-size: 1.3rem; }
       .about-grid { grid-template-columns: 1fr; }
-      .nav-links { 
-        flex-direction: column; 
-        gap: 1rem; 
+      .nav-links {
+        flex-direction: column;
+        gap: 1rem;
         margin-top: 1rem;
         width: 100%;
       }
-      .hero-buttons {
-        flex-direction: column;
-      }
-      .btn {
-        width: 100%;
-        max-width: 300px;
-      }
+      .hero-buttons { flex-direction: column; }
+      .btn { width: 100%; max-width: 300px; }
     }
   </style>
 </head>
-
 <body>
   <header>
     <nav class="container">
-      <div class="logo">MindSpace Kenya</div>
+      <div class="logo">
+        ❤️ MindSpace Kenya
+      </div>
       <ul class="nav-links">
         <li><a href="#about">About</a></li>
         <li><a href="#features">Features</a></li>
@@ -323,8 +383,44 @@
       <h1>Start Your Healing Journey Today</h1>
       <p>Connect with licensed Kenyan mental health experts. Private, affordable, and effective therapy that understands your culture.</p>
       <div class="hero-buttons">
-        <a href="getstarted.html" class="btn btn-primary btn-lg">Get Matched with a Therapist</a>
-        <a href="#about" class="btn btn-secondary">Learn More</a>
+        <a href="getstarted.html" class="btn btn-primary">Get Matched with a Therapist</a>
+        <a href="#about" class="btn btn-outline">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="health-images">
+    <div class="container">
+      <h2>Mental Health Matters</h2>
+      <div class="image-grid">
+        <div class="image-card">
+          <img src="https://images.pexels.com/photos/7176325/pexels-photo-7176325.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Therapy session">
+          <div class="image-overlay">
+            <h3>Professional Support</h3>
+            <p>Licensed therapists ready to help</p>
+          </div>
+        </div>
+        <div class="image-card">
+          <img src="https://images.pexels.com/photos/3759657/pexels-photo-3759657.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Mental wellness">
+          <div class="image-overlay">
+            <h3>Find Inner Peace</h3>
+            <p>Tools for better mental health</p>
+          </div>
+        </div>
+        <div class="image-card">
+          <img src="https://images.pexels.com/photos/4101143/pexels-photo-4101143.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Community support">
+          <div class="image-overlay">
+            <h3>Community Care</h3>
+            <p>You're not alone in this journey</p>
+          </div>
+        </div>
+        <div class="image-card">
+          <img src="https://images.pexels.com/photos/3759660/pexels-photo-3759660.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Self care">
+          <div class="image-overlay">
+            <h3>Self-Care First</h3>
+            <p>Prioritize your mental wellness</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -338,12 +434,7 @@
           <p>We believe mental health care should be accessible, stigma-free, and tailored to you. Our platform makes it easy to find support that truly understands your journey.</p>
           <p><strong>Join thousands of Kenyans who have found healing and hope with professional support.</strong></p>
         </div>
-        <img 
-          src="https://images.pexels.com/photos/7746658/pexels-photo-7746658.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" 
-          alt="Kenyan community support" 
-          class="section-img"
-          loading="lazy"
-        >
+        <img src="https://images.pexels.com/photos/7176319/pexels-photo-7176319.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Kenyan community support" class="section-img">
       </div>
     </div>
   </section>
@@ -388,19 +479,50 @@
 
   <footer>
     <div class="container">
-      <p>&copy; <span id="year"></span> MindSpace Kenya. All rights reserved.</p>
-      <div class="footer-links">
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms of Service</a>
-        <a href="#">Contact Us</a>
+      <div class="footer-grid">
+        <div class="footer-section">
+          <h4>Contact Us</h4>
+          <p>📞 +254 712 345 678</p>
+          <p>📞 +254 733 456 789</p>
+          <p>✉️ support@mindspace.co.ke</p>
+          <p>📍 Nairobi, Kenya</p>
+        </div>
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <a href="#">About Us</a>
+          <a href="#">Find a Therapist</a>
+          <a href="#">Pricing</a>
+          <a href="#">FAQs</a>
+          <a href="#">Blog</a>
+        </div>
+        <div class="footer-section">
+          <h4>Legal</h4>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Cookie Policy</a>
+          <a href="#">Disclaimer</a>
+        </div>
+        <div class="footer-section">
+          <h4>Follow Us</h4>
+          <div class="social-icons">
+            <a href="#" class="social-icon">f</a>
+            <a href="#" class="social-icon">𝕏</a>
+            <a href="#" class="social-icon">in</a>
+            <a href="#" class="social-icon">IG</a>
+            <a href="#" class="social-icon">YT</a>
+          </div>
+          <p style="margin-top: 1rem;">Join our community for mental health tips and resources</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 MindSpace Kenya. All rights reserved.</p>
+        <p>Built with ❤️ for mental health awareness in Kenya</p>
+        <p style="margin-top: 0.5rem; font-size: 0.9rem;">Licensed by the Kenya Medical Practitioners and Dentists Board</p>
       </div>
     </div>
   </footer>
 
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-    
-    // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         e.preventDefault();
