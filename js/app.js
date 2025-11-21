@@ -79,7 +79,206 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+ document.getElementById('headerPic').src = url;
+}
 
+// Save all changes
+function saveProfileChanges() {
+  const newName = document.getElementById('editName').value.trim();
+  const newUsername = document.getElementById('editUsername').value.trim().replace('@', '');
+  const rawUsername = document.getElementById('editUsername').value.trim().toLowerCase().replace(/[^a-z0-9_]/g, '');
+  const newUsername = '@' + rawUsername;
+  const newPhone = document.getElementById('editPhone').value.trim();
+
+  if (!newName || !newUsername) {
+    alert('Name and username are required');
+  if (!newName || rawUsername.length < 3) {
+    alert('Name and username (min 3 chars) are required');
+    return;
+  }
+
+  const user = JSON.parse(localStorage.getItem('mindspace_user'));
+  user.name = newName;
+  user.phone = newPhone;
+
+  localStorage.setItem('mindspace_user', JSON.stringify(user));
+  localStorage.setItem('user_username', '@' + newUsername);
+  // CHECK IF USERNAME IS ALREADY TAKEN
+  const allUsers = JSON.parse(localStorage.getItem('mindspace_users') || '[]');
+  const currentUser = JSON.parse(localStorage.getItem('mindspace_user'));
+  const oldUsername = localStorage.getItem('user_username') || '';
+
+  alert('Profile updated successfully!');
+  closeEditModal();
+  loadUserProfile(); // Refresh header
+  location.reload(); // Optional: refresh page
+}
+  const usernameTaken = allUsers.some(u => 
+    (localStorage.getItem('user_username') || '@' + u.email.split('@')[0]) === newUsername &&
+    u.email !== currentUser.email
+  );
+
+// Close dropdown when clicking outside
+window.onclick = function(e) {
+  if (!e.target.closest('.profile-trigger') && !e.target.closest('.dropdown-menu')) {
+    document.getElementById('dropdownMenu')?.classList.remove('show');
+  if (usernameTaken && oldUsername !== newUsername) {
+    alert('Sorry, @' + rawUsername + ' is already taken. Choose another!');
+    return;
+  }
+}
+
+// Call on page load
+document.addEventListener('DOMContentLoaded', loadUserProfile);
+  // Save updated user
+  currentUser.name = newName;
+  currentUser.phone = newPhone;
+
+  // Update in all users list
+  const userIndex = allUsers.findIndex(u => u.email === currentUser.email);
+  if (userIndex !== -1) allUsers[userIndex] = { ...allUsers[userIndex], name: newName, phone: newPhone };
+
+  localStorage.setItem('mindspace_user', JSON.stringify(currentUser));
+  localStorage.setItem('mindspace_users', JSON.stringify(allUsers));
+  localStorage.setItem('user_username', newUsername);
+
+  alert(`Profile updated! Your new username is ${newUsername}`);
+  closeEditModal();
+  loadUserProfile();
+  setTimeout(() => location.reload(), 800);
+}
+
+function loadDashboard() {
+  document.getElementById('userName').textContent = currentUser.name;
+  document.getElementById('profileName').textContent = currentUser.name;
+  document.getElementById('profileEmail').textContent = currentUser.email;
+  document.getElementById('profilePic').src = localStorage.getItem('profile_pic') || 'https://images.pexels.com/photos/6646919/pexels-photo-6646919.jpeg';
+
+  const therapist = therapistOptions[Math.floor(Math.random() * therapistOptions.length)];
+  document.getElementById('therapistName').textContent = therapist.name;
+  document.getElementById('therapistPic').src = therapist.pic;
+
+  loadAppointments();
+  renderChart();
+  if (localStorage.getItem('premium_user') === 'true') {
+    document.querySelector('.greeting h1').innerHTML += ' <span style="background:#10b981;color:white;padding:4px 12px;border-radius:20px;font-size:0.5em;">PREMIUM</span>';
+  }
+}
+
+function changeProfilePic() {
+  const pics = ['https://images.pexels.com/photos/6646919/pexels-photo-6646919.jpeg', 'https://images.pexels.com/photos/5691717/pexels-photo-5691717.jpeg', 'https://images.pexels.com/photos/7746658/pexels-photo-7746658.jpeg'];
+  const newPic = pics[Math.floor(Math.random() * pics.length)];
+  document.getElementById('profilePic').src = newPic;
+  localStorage.setItem('profile_pic', newPic);
+}
+
+function addAppointment() {
+  const date = prompt('Enter date (YYYY-MM-DD):');
+  if (date && !isNaN(Date.parse(date))) {
+    appointments.push({ date, therapist: document.getElementById('therapistName').textContent });
+    localStorage.setItem('mindspace_appointments', JSON.stringify(appointments));
+    loadAppointments();
+  }
+}
+
+function loadAppointments() {
+  const list = document.getElementById('appointmentList');
+  list.innerHTML = appointments.map(a => `<li>${a.date} with ${a.therapist}</li>`).join('') || '<li>No appointments yet</li>';
+}
+
+function logMood() {
+  const mood = prompt('How are you feeling? (happy/calm/okay/sad/anxious)');
+  const values = {happy:5, calm:4, okay:3, sad:2, anxious:1};
+  if (values[mood]) {
+    moodsData.push({ mood, value: values[mood], date: new Date().toISOString().split('T')[0] });
+    localStorage.setItem('mindspace_moods', JSON.stringify(moodsData));
+    renderChart();
+  }
+}
+
+function renderChart() {
+  const ctx = document.getElementById('moodChart')?.getContext('2d');
+  if (ctx && moodsData.length > 0) {
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: moodsData.slice(-7).map(m => m.date.slice(5,10)),
+        datasets: [{ label: 'Mood', data: moodsData.slice(-7).map(m => m.value), borderColor: '#059669', backgroundColor: 'rgba(5,150,105,0.2)', tension: 0.4, fill: true }]
+      },
+      options: { scales: { y: { min: 0, max: 5 } } }
+    });
+  }
+}
+
+function openChat() {
+  document.getElementById('chatModal').style.display = 'flex';
+  document.getElementById('chatTherapistName').textContent = document.getElementById('therapistName').textContent;
+  document.getElementById('chatTherapistPic').src = document.getElementById('therapistPic').src;
+  loadChat();
+}
+
+function closeChat() { document.getElementById('chatModal').style.display = 'none'; }
+
+function sendMessage() {
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim();
+  if (!msg) return;
+  const messages = JSON.parse(localStorage.getItem('chat_messages') || '[]');
+  messages.push({ text: msg, from: 'user', time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) });
+  localStorage.setItem('chat_messages', JSON.stringify(messages));
+  input.value = '';
+  loadChat();
+
+  setTimeout(() => {
+    const replies = ["I'm here for you.", "That sounds tough.", "You're not alone.", "How does that make you feel?", "You've got this."];
+    messages.push({ text: replies[Math.floor(Math.random() * replies.length)], from: 'therapist', time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) });
+    localStorage.setItem('chat_messages', JSON.stringify(messages));
+    loadChat();
+  }, 2000);
+}
+
+function loadChat() {
+  const container = document.getElementById('chatMessages');
+  const messages = JSON.parse(localStorage.getItem('chat_messages') || '[]');
+  container.innerHTML = messages.map(m => `<div class="message ${m.from}"><small>${m.time}</small><br>${m.text}</div>`).join('');
+  container.scrollTop = container.scrollHeight;
+}
+
+function payWithMpesa() {
+  const phone = prompt('Enter M-PESA number (07xxxxxxxx):');
+  if (!/^07\d{8}$/.test(phone)) return alert('Invalid number');
+  alert('Sending STK Push...');
+  setTimeout(() => {
+    if (confirm('Complete payment on phone?')) {
+      localStorage.setItem('premium_user', 'true');
+      alert('Payment successful! You\'re now Premium!');
+      location.reload();
+    }
+  }, 8000);
+}
+
+function writeJournal() { const entry = prompt('Write your journal...'); if (entry) alert('Saved privately'); }
+function breathingExercise() { alert('Inhale 4s → Hold 4s → Exhale 6s. Repeat 5 times.'); }
+function forgotPassword(e) { e.preventDefault(); alert('Check your email for reset link'); }
+function logout() { if (confirm('Log out?')) { localStorage.removeItem('mindspace_user'); window.location.href = 'index.html'; } }
+// DARK MODE TOGGLE
+function toggleDarkMode() {
+  document.body.classList.toggle('dark-mode');
+  const isDark = document.body.classList.contains('dark-mode');
+  localStorage.setItem('dark_mode', isDark ? 'enabled' : 'disabled');
+
+  // Update icon (optional)
+  const menuItem = event.target;
+  menuItem.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+}
+
+// Load dark mode preference on start
+document.addEventListener('DOMContentLoaded', () => {
+  if (localStorage.getItem('dark_mode') === 'enabled') {
+    document.body.classList.add('dark-mode');
+  }
+  loadUserProfile(); // your existing function
+});
 // Profile pictures available for selection
 const profilePics = [
     'https://images.pexels.com/photos/6646919/pexels-photo-6646919.jpeg?auto=compress&cs=tinysrgb&w=400',
