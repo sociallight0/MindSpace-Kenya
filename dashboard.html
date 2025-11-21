@@ -1,127 +1,393 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard - MindSpace Kenya</title>
-  <link rel="stylesheet" href="css/styles.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body class="dashboard-body">
+import React, { useState, useEffect } from 'react';
+import { Calendar, MessageCircle, Users, Brain, TrendingUp, Clock, Phone, Mail, MapPin, Image, X, Send, Heart, Activity, BookOpen } from 'lucide-react';
 
-  <!-- Top Navigation -->
-<!-- TOP RIGHT PROFILE WITH EDIT MODAL -->
-<header class="main-header">
-  <div class="container nav-container">
-    <div class="logo">MindSpace Kenya</div>
-    
-    <nav class="main-nav">
-      <a href="dashboard.html" class="active">Dashboard</a>
-      <a href="therapy.html">Therapy</a>
-      <a href="ai-assistant.html">AI Assistant</a>
-      <a href="community.html">Community</a>
-      <!-- Inside the dropdown menu, add this line -->
-<a href="#" onclick="toggleDarkMode()">Dark Mode</a>
-    </nav>
+const MindSpaceDashboard = () => {
+  const [user, setUser] = useState(null);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showAIChat, setShowAIChat] = useState(false);
+  const [chatMessages, setChatMessages] = useState([]);
+  const [chatInput, setChatInput] = useState('');
+  const [appointments, setAppointments] = useState([]);
+  const [moodData, setMoodData] = useState([]);
 
-    <!-- PROFILE DROPDOWN -->
-    <div class="profile-dropdown">
-      <div class="profile-trigger" onclick="toggleDropdown()">
-        <img id="headerPic" src="" alt="Profile" class="header-pic">
-        <div class="user-info">
-          <span id="headerName">User</span>
-          <small id="headerUsername">@username</small>
+  // Profile pictures available for selection
+  const profilePics = [
+    'https://images.pexels.com/photos/6646919/pexels-photo-6646919.jpeg?auto=compress&cs=tinysrgb&w=400',
+    'https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=400',
+    'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=400',
+    'https://images.pexels.com/photos/762020/pexels-photo-762020.jpeg?auto=compress&cs=tinysrgb&w=400',
+    'https://images.pexels.com/photos/5691717/pexels-photo-5691717.jpeg?auto=compress&cs=tinysrgb&w=400'
+  ];
+
+  useEffect(() => {
+    // Load user data
+    const storedUser = {
+      name: 'Aisha Mwangi',
+      email: 'aisha@mindspace.co.ke',
+      phone: '0712345678',
+      profilePic: profilePics[0],
+      joinDate: '2024-01-15',
+      sessionsCompleted: 12
+    };
+    setUser(storedUser);
+
+    // Sample appointments
+    setAppointments([
+      { id: 1, date: '2024-11-25', time: '10:00 AM', therapist: 'Dr. Juma Otieno', type: 'Video Call' },
+      { id: 2, date: '2024-11-28', time: '2:00 PM', therapist: 'Dr. Fatuma Ali', type: 'In-Person' }
+    ]);
+
+    // Sample mood data
+    setMoodData([
+      { day: 'Mon', mood: 4 },
+      { day: 'Tue', mood: 3 },
+      { day: 'Wed', mood: 5 },
+      { day: 'Thu', mood: 4 },
+      { day: 'Fri', mood: 5 },
+      { day: 'Sat', mood: 4 },
+      { day: 'Sun', mood: 5 }
+    ]);
+  }, []);
+
+  const handleProfilePicChange = (pic) => {
+    setUser({ ...user, profilePic: pic });
+  };
+
+  const handleSendMessage = () => {
+    if (!chatInput.trim()) return;
+
+    const userMsg = { text: chatInput, sender: 'user', time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) };
+    setChatMessages([...chatMessages, userMsg]);
+    setChatInput('');
+
+    // AI Response simulation
+    setTimeout(() => {
+      const responses = [
+        "I understand. Can you tell me more about how that makes you feel?",
+        "That sounds challenging. Remember, you're taking positive steps by being here.",
+        "It's completely normal to feel this way. How can I support you today?",
+        "Thank you for sharing. Have you tried any coping strategies that help?",
+        "You're doing great by reaching out. Let's work through this together."
+      ];
+      const aiMsg = {
+        text: responses[Math.floor(Math.random() * responses.length)],
+        sender: 'ai',
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      };
+      setChatMessages(prev => [...prev, aiMsg]);
+    }, 1000);
+  };
+
+  if (!user) return <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-emerald-900 to-emerald-700">Loading...</div>;
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-emerald-900 via-emerald-800 to-emerald-700">
+      {/* Header */}
+      <header className="bg-emerald-900/80 backdrop-blur-sm border-b border-emerald-700 sticky top-0 z-40">
+        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+          <div className="flex items-center gap-3">
+            <Heart className="w-8 h-8 text-emerald-400" />
+            <h1 className="text-2xl font-bold text-white">MindSpace Kenya</h1>
+          </div>
+          <div className="flex items-center gap-4">
+            <button className="text-emerald-100 hover:text-white transition-colors">Dashboard</button>
+            <button className="text-emerald-100 hover:text-white transition-colors">Community</button>
+            <div className="flex items-center gap-3 cursor-pointer" onClick={() => setShowEditModal(true)}>
+              <img src={user.profilePic} alt="Profile" className="w-10 h-10 rounded-full border-2 border-emerald-400" />
+              <span className="text-white font-medium">{user.name.split(' ')[0]}</span>
+            </div>
+          </div>
         </div>
-        <span class="dropdown-arrow">Down Arrow</span>
-      </div>
+      </header>
 
-   <div id="dropdownMenu" class="dropdown-menu">
-  <a href="#" onclick="openEditModal(); return false;">Edit Profile</a>
-  <a href="#" onclick="toggleDarkMode()">Dark Mode</a>
-  <a href="#" onclick="logout()">Logout</a>
-</div>
-<!-- EDIT PROFILE MODAL -->
-<div id="editProfileModal" class="profile-modal">
-  <div class="profile-modal-content">
-    <span class="close-modal" onclick="closeEditModal()">×</span>
-    <h2>Edit Your Profile</h2>
-    
-    <div style="text-align:center;margin:1.5rem 0;">
-      <img id="modalPicPreview" src="" class="big-profile-pic">
-      <div class="profile-options" style="margin-top:1rem;">
-        <div class="pic-option" onclick="changePic('https://images.pexels.com/photos/6646919/pexels-photo-6646919.jpeg')"><img src="https://images.pexels.com/photos/6646919/pexels-photo-6646919.jpeg"></div>
-        <div class="pic-option" onclick="changePic('https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg')"><img src="https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg"></div>
-        <div class="pic-option" onclick="changePic('https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg')"><img src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg"></div>
-        <div class="pic-option" onclick="changePic('https://images.pexels.com/photos/762020/pexels-photo-762020.jpeg')"><img src="https://images.pexels.com/photos/762020/pexels-photo-762020.jpeg"></div>
-      </div>
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 py-8">
+        {/* Welcome Section */}
+        <div className="bg-white/95 rounded-2xl p-8 mb-6 shadow-xl">
+          <div className="flex justify-between items-start">
+            <div>
+              <h2 className="text-3xl font-bold text-emerald-900 mb-2">Welcome back, {user.name.split(' ')[0]}! 👋</h2>
+              <p className="text-gray-600">How are you feeling today?</p>
+            </div>
+            <div className="text-right">
+              <p className="text-sm text-gray-500">Member since</p>
+              <p className="font-semibold text-emerald-700">{new Date(user.joinDate).toLocaleDateString()}</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+          <div className="bg-white/95 rounded-xl p-6 shadow-lg">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-gray-600 text-sm">Sessions</p>
+                <p className="text-3xl font-bold text-emerald-700">{user.sessionsCompleted}</p>
+              </div>
+              <Calendar className="w-10 h-10 text-emerald-500" />
+            </div>
+          </div>
+          <div className="bg-white/95 rounded-xl p-6 shadow-lg">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-gray-600 text-sm">Mood Score</p>
+                <p className="text-3xl font-bold text-emerald-700">4.3</p>
+              </div>
+              <TrendingUp className="w-10 h-10 text-emerald-500" />
+            </div>
+          </div>
+          <div className="bg-white/95 rounded-xl p-6 shadow-lg">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-gray-600 text-sm">Streak</p>
+                <p className="text-3xl font-bold text-emerald-700">7d</p>
+              </div>
+              <Activity className="w-10 h-10 text-emerald-500" />
+            </div>
+          </div>
+          <div className="bg-white/95 rounded-xl p-6 shadow-lg">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-gray-600 text-sm">Journal</p>
+                <p className="text-3xl font-bold text-emerald-700">24</p>
+              </div>
+              <BookOpen className="w-10 h-10 text-emerald-500" />
+            </div>
+          </div>
+        </div>
+
+        {/* Main Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Left Column */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* Appointments */}
+            <div className="bg-white/95 rounded-2xl p-6 shadow-xl">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-xl font-bold text-emerald-900">Upcoming Sessions</h3>
+                <button className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors text-sm">
+                  Book New
+                </button>
+              </div>
+              {appointments.map(apt => (
+                <div key={apt.id} className="border-l-4 border-emerald-500 bg-emerald-50 p-4 rounded-lg mb-3">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <p className="font-semibold text-emerald-900">{apt.therapist}</p>
+                      <p className="text-sm text-gray-600">{apt.type}</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-sm font-medium text-emerald-700">{apt.date}</p>
+                      <p className="text-sm text-gray-600">{apt.time}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Mood Chart */}
+            <div className="bg-white/95 rounded-2xl p-6 shadow-xl">
+              <h3 className="text-xl font-bold text-emerald-900 mb-4">Your Mood This Week</h3>
+              <div className="flex items-end justify-between h-48">
+                {moodData.map((data, i) => (
+                  <div key={i} className="flex flex-col items-center gap-2 flex-1">
+                    <div className="w-full bg-emerald-100 rounded-t-lg relative" style={{ height: `${data.mood * 20}%` }}>
+                      <div className="absolute inset-0 bg-gradient-to-t from-emerald-500 to-emerald-400 rounded-t-lg"></div>
+                    </div>
+                    <span className="text-xs font-medium text-gray-600">{data.day}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column */}
+          <div className="space-y-6">
+            {/* User Profile Card */}
+            <div className="bg-white/95 rounded-2xl p-6 shadow-xl text-center">
+              <img src={user.profilePic} alt="Profile" className="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-emerald-400" />
+              <h3 className="text-xl font-bold text-emerald-900">{user.name}</h3>
+              <p className="text-gray-600 text-sm mb-4">{user.email}</p>
+              <button onClick={() => setShowEditModal(true)} className="bg-emerald-600 text-white px-6 py-2 rounded-lg hover:bg-emerald-700 transition-colors w-full">
+                Edit Profile
+              </button>
+            </div>
+
+            {/* Quick Actions */}
+            <div className="bg-white/95 rounded-2xl p-6 shadow-xl">
+              <h3 className="text-lg font-bold text-emerald-900 mb-4">Quick Actions</h3>
+              <div className="space-y-3">
+                <button className="w-full bg-emerald-50 text-emerald-700 py-3 rounded-lg hover:bg-emerald-100 transition-colors flex items-center justify-center gap-2">
+                  <Calendar className="w-5 h-5" />
+                  Book Session
+                </button>
+                <button className="w-full bg-emerald-50 text-emerald-700 py-3 rounded-lg hover:bg-emerald-100 transition-colors flex items-center justify-center gap-2">
+                  <Users className="w-5 h-5" />
+                  Community
+                </button>
+                <button onClick={() => setShowAIChat(true)} className="w-full bg-emerald-50 text-emerald-700 py-3 rounded-lg hover:bg-emerald-100 transition-colors flex items-center justify-center gap-2">
+                  <Brain className="w-5 h-5" />
+                  AI Assistant
+                </button>
+              </div>
+            </div>
+
+            {/* Crisis Support */}
+            <div className="bg-red-50 border-2 border-red-300 rounded-2xl p-6 shadow-xl">
+              <h3 className="text-lg font-bold text-red-700 mb-2">24/7 Crisis Support</h3>
+              <p className="text-sm text-red-600 mb-3">If you're in immediate danger, please call:</p>
+              <a href="tel:999" className="block bg-red-600 text-white text-center py-2 rounded-lg hover:bg-red-700 transition-colors font-bold">
+                📞 Emergency: 999
+              </a>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-emerald-900 text-white mt-12 py-8">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-6">
+            <div>
+              <h4 className="font-bold text-lg mb-3">Contact Us</h4>
+              <div className="space-y-2 text-emerald-200">
+                <p className="flex items-center gap-2"><Phone className="w-4 h-4" /> +254 712 345 678</p>
+                <p className="flex items-center gap-2"><Mail className="w-4 h-4" /> support@mindspace.co.ke</p>
+                <p className="flex items-center gap-2"><MapPin className="w-4 h-4" /> Nairobi, Kenya</p>
+              </div>
+            </div>
+            <div>
+              <h4 className="font-bold text-lg mb-3">Follow Us</h4>
+              <div className="flex gap-4">
+                <a href="#" className="w-10 h-10 bg-emerald-700 rounded-full flex items-center justify-center hover:bg-emerald-600 transition-colors">f</a>
+                <a href="#" className="w-10 h-10 bg-emerald-700 rounded-full flex items-center justify-center hover:bg-emerald-600 transition-colors">X</a>
+                <a href="#" className="w-10 h-10 bg-emerald-700 rounded-full flex items-center justify-center hover:bg-emerald-600 transition-colors">in</a>
+                <a href="#" className="w-10 h-10 bg-emerald-700 rounded-full flex items-center justify-center hover:bg-emerald-600 transition-colors">IG</a>
+              </div>
+            </div>
+            <div>
+              <h4 className="font-bold text-lg mb-3">Quick Links</h4>
+              <div className="space-y-2 text-emerald-200">
+                <p><a href="#" className="hover:text-white">Privacy Policy</a></p>
+                <p><a href="#" className="hover:text-white">Terms of Service</a></p>
+                <p><a href="#" className="hover:text-white">FAQs</a></p>
+              </div>
+            </div>
+          </div>
+          <div className="border-t border-emerald-700 pt-4 text-center text-emerald-300">
+            <p>&copy; {new Date().getFullYear()} MindSpace Kenya. All rights reserved. Built with ❤️ for mental health awareness in Kenya.</p>
+          </div>
+        </div>
+      </footer>
+
+      {/* Edit Profile Modal */}
+      {showEditModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl p-8 max-w-md w-full max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold text-emerald-900">Edit Profile</h2>
+              <button onClick={() => setShowEditModal(false)} className="text-gray-500 hover:text-gray-700">
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            
+            <div className="text-center mb-6">
+              <img src={user.profilePic} alt="Profile" className="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-emerald-400" />
+              <p className="text-sm text-gray-600 mb-3">Choose a profile picture:</p>
+              <div className="flex gap-3 justify-center flex-wrap">
+                {profilePics.map((pic, i) => (
+                  <img
+                    key={i}
+                    src={pic}
+                    alt={`Option ${i + 1}`}
+                    className={`w-16 h-16 rounded-full cursor-pointer border-3 ${user.profilePic === pic ? 'border-emerald-500 border-4' : 'border-gray-300 border-2'} hover:border-emerald-400`}
+                    onClick={() => handleProfilePicChange(pic)}
+                  />
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                <input type="text" value={user.name} onChange={(e) => setUser({ ...user, name: e.target.value })} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                <input type="email" value={user.email} onChange={(e) => setUser({ ...user, email: e.target.value })} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                <input type="tel" value={user.phone} onChange={(e) => setUser({ ...user, phone: e.target.value })} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent" />
+              </div>
+            </div>
+
+            <button onClick={() => setShowEditModal(false)} className="w-full bg-emerald-600 text-white py-3 rounded-lg hover:bg-emerald-700 transition-colors mt-6 font-semibold">
+              Save Changes
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* AI Chat Popup */}
+      {showAIChat && (
+        <div className="fixed bottom-4 right-4 w-96 h-[500px] bg-white rounded-2xl shadow-2xl flex flex-col z-50 border-2 border-emerald-500">
+          <div className="bg-emerald-600 text-white p-4 rounded-t-2xl flex justify-between items-center">
+            <div className="flex items-center gap-2">
+              <Brain className="w-6 h-6" />
+              <h3 className="font-bold">AI Support Assistant</h3>
+            </div>
+            <button onClick={() => setShowAIChat(false)} className="hover:bg-emerald-700 p-1 rounded">
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+          
+          <div className="flex-1 overflow-y-auto p-4 bg-gray-50">
+            {chatMessages.length === 0 ? (
+              <div className="text-center text-gray-500 mt-8">
+                <Brain className="w-12 h-12 mx-auto mb-3 text-emerald-400" />
+                <p>Hi! I'm here to support you. How are you feeling today?</p>
+              </div>
+            ) : (
+              chatMessages.map((msg, i) => (
+                <div key={i} className={`mb-3 ${msg.sender === 'user' ? 'text-right' : 'text-left'}`}>
+                  <div className={`inline-block max-w-[80%] p-3 rounded-lg ${msg.sender === 'user' ? 'bg-emerald-600 text-white' : 'bg-white border border-gray-200'}`}>
+                    <p className="text-sm">{msg.text}</p>
+                    <p className="text-xs opacity-70 mt-1">{msg.time}</p>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+          
+          <div className="p-4 border-t border-gray-200">
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={chatInput}
+                onChange={(e) => setChatInput(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                placeholder="Type your message..."
+                className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+              />
+              <button onClick={handleSendMessage} className="bg-emerald-600 text-white p-2 rounded-lg hover:bg-emerald-700 transition-colors">
+                <Send className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* AI Chat Trigger Button (when closed) */}
+      {!showAIChat && (
+        <button
+          onClick={() => setShowAIChat(true)}
+          className="fixed bottom-6 right-6 bg-emerald-600 text-white p-4 rounded-full shadow-2xl hover:bg-emerald-700 transition-all hover:scale-110 z-40"
+        >
+          <MessageCircle className="w-6 h-6" />
+        </button>
+      )}
     </div>
+  );
+};
 
-    <div class="input-group">
-      <label>Full Name</label>
-      <input type="text" id="editName" placeholder="Your full name">
-    </div>
-    <div class="input-group">
-      <label>Username</label>
-      <input type="text" id="editUsername" placeholder="@yourusername">
-    </div>
-    <div class="input-group">
-      <label>Phone Number</label>
-      <input type="tel" id="editPhone" placeholder="0712345678" maxlength="10">
-    </div>
-
-    <button onclick="saveProfileChanges()" class="primary-btn" style="width:100%;margin-top:1rem;">
-      Save Changes
-    </button>
-  </div>
-</div>
-  <main class="dashboard-main">
-    <div class="container">
-      <div class="welcome-section">
-        <h1>Hello <span id="userName">Friend</span>! <span style="color:#10b981;">Welcome Back</span></h1>
-        <p>How are you feeling today?</p>
-      </div>
-
-      <!-- Quick Actions -->
-      <div class="quick-actions">
-        <div class="action-card" onclick="location.href='therapy.html'">
-          <h3>Book Session</h3>
-          <p>Talk to your therapist</p>
-        </div>
-        <div class="action-card" onclick="location.href='ai-assistant.html'">
-          <h3>AI Assistant</h3>
-          <p>Get instant support</p>
-        </div>
-        <div class="action-card" onclick="location.href='community.html'">
-          <h3>Community</h3>
-          <p>Connect with others</p>
-        </div>
-      </div>
-
-      <!-- Mood Chart & Appointments -->
-      <div class="grid-2">
-        <div class="chart-card">
-          <h2>Your Mood This Week</h2>
-          <canvas id="moodChart"></canvas>
-        </div>
-        <div class="appointments-card">
-          <h2>Upcoming Sessions</h2>
-          <ul id="appointmentList"></ul>
-          <button onclick="location.href='therapy.html'">Book New Session</button>
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <script src="js/app.js"></script>
-  <script>
-    function toggleDropdown() {
-      document.getElementById('dropdownMenu').classList.toggle('show');
-    }
-    window.onclick = function(e) {
-      if (!e.target.matches('.profile-trigger') && !e.target.matches('.header-pic') && !e.target.matches('.dropdown-arrow')) {
-        document.getElementById('dropdownMenu').classList.remove('show');
-      }
-    }
-  </script>
-</body>
-</html>
+export default MindSpaceDashboard;
