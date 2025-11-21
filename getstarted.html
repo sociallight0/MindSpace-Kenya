@@ -4,77 +4,332 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Get Started - MindSpace Kenya</title>
-  <link rel="stylesheet" href="css/styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    /* Enhanced Visibility for Big Buttons */
+    :root {
+      --jungle: #064e3b;
+      --jungle-light: #059669;
+      --accent: #10b981;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #064e3b 0%, #047857 100%);
+      min-height: 100vh;
+    }
+
+    /* Header */
+    .simple-header {
+      padding: 1.5rem 0;
+      background: rgba(0,0,0,0.15);
+    }
+
+    .header-content {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: white;
+      font-family: 'Sora', sans-serif;
+    }
+
+    .text-link {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: opacity 0.3s;
+    }
+
+    .text-link:hover {
+      opacity: 0.8;
+    }
+
+    /* Main Container */
+    .getstarted-container {
+      max-width: 650px;
+      margin: 0 auto;
+      padding: 2rem 20px 4rem;
+      color: white;
+    }
+
+    /* Progress Bar */
+    .progress-container {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .progress-text {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    .progress-bar {
+      height: 10px;
+      background: rgba(255,255,255,0.25);
+      border-radius: 5px;
+      overflow: hidden;
+      max-width: 450px;
+      margin: 0 auto;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      width: 0%;
+      transition: width 0.5s ease;
+      border-radius: 5px;
+    }
+
+    /* Question Card */
+    .question-card {
+      background: white;
+      color: #1e293b;
+      padding: 3.5rem 3rem;
+      border-radius: 28px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.35);
+      animation: slideIn 0.5s ease-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .question-card h1 {
+      font-family: 'Sora', sans-serif;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: #064e3b;
+      line-height: 1.3;
+    }
+
+    .subtitle {
+      font-size: 1.25rem;
+      color: #64748b;
+      margin-bottom: 2.5rem;
+      font-weight: 400;
+    }
+
+    /* Form Elements */
+    .big-input {
+      width: 100%;
+      padding: 18px 20px;
+      font-size: 1.15rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 14px;
+      margin-bottom: 1.5rem;
+      font-family: 'Poppins', sans-serif;
+      transition: border-color 0.3s;
+    }
+
+    .big-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+    }
+
+    .primary-btn {
+      background: var(--accent);
+      color: white;
+      padding: 18px 40px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 1.5rem;
+      font-family: 'Poppins', sans-serif;
+      transition: all 0.3s ease;
+    }
+
+    .primary-btn:hover {
+      background: #059669;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+    }
+
+    .primary-btn:disabled {
+      background: #94a3b8;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Options Grid */
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .option-checkbox {
+      position: relative;
+    }
+
+    .option-checkbox input {
+      position: absolute;
+      opacity: 0;
+    }
+
+    .option-checkbox label {
+      display: block;
+      padding: 18px 16px;
+      background: #f8fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    .option-checkbox input:checked + label {
+      border-color: var(--accent);
+      background: #ecfdf5;
+      color: #064e3b;
+    }
+
+    .option-checkbox label:hover {
+      border-color: var(--accent);
+      background: #f0fdf4;
+    }
+
+    /* Big Option Buttons */
     .big-options {
       display: grid;
-      grid-template-columns: 1fr;
       gap: 1.2rem;
-      margin: 3rem 0;
+      margin: 2.5rem 0;
     }
 
     .option-btn {
-      padding: 24px 20px;
-      font-size: 1.4rem !important;
+      padding: 22px 20px;
+      font-size: 1.35rem;
       font-weight: 600;
       background: #f1f5f9;
       color: #1e293b;
       border: 3px solid #e2e8f0;
-      border-radius: 18px;
+      border-radius: 16px;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      font-family: 'Poppins', sans-serif;
     }
 
     .option-btn:hover {
       background: #ecfdf5;
-      border-color: #10b981;
-      transform: translateY(-4px);
-      box-shadow: 0 10px 25px rgba(16, 185, 129, 0.15);
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(16, 185, 129, 0.15);
     }
 
     .option-btn.selected {
-      background: #10b981 !important;
-      color: white !important;
-      border-color: #10b981 !important;
-      box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
     }
 
-    .option-btn:active {
-      transform: translateY(-2px);
+    /* Steps */
+    .step {
+      display: none;
     }
 
-    /* Make text stand out */
-    .question-card h1 {
-      font-size: 2.8rem !important;
-      color: #064e3b;
-      margin-bottom: 1rem;
+    .step.active {
+      display: block;
     }
 
-    .subtitle {
-      font-size: 1.35rem !important;
-      color: #475569;
+    /* Trust Badges */
+    .trust-badges {
+      text-align: center;
+      margin-top: 3.5rem;
+    }
+
+    .trust-badges p {
+      font-size: 1.1rem;
+      margin-bottom: 1.2rem;
       font-weight: 500;
     }
 
-    .big-input {
-      font-size: 1.3rem !important;
-      padding: 20px !important;
+    .badges {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
     }
 
-    .primary-btn {
-      font-size: 1.3rem !important;
-      padding: 18px 40px !important;
+    .badges span {
+      background: rgba(255,255,255,0.2);
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      backdrop-filter: blur(10px);
+    }
+
+    .secure-note {
+      text-align: center;
+      color: #94a3b8;
       margin-top: 2rem;
+      font-size: 0.95rem;
+    }
+
+    .secure-note a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .secure-note a:hover {
+      text-decoration: underline;
+    }
+
+    .error-message {
+      background: #fef2f2;
+      border: 1px solid #ef4444;
+      color: #dc2626;
+      padding: 12px 16px;
+      border-radius: 10px;
+      margin-top: 1rem;
+      display: none;
+    }
+
+    .error-message.show {
+      display: block;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .question-card {
+        padding: 2.5rem 2rem;
+      }
+      .question-card h1 {
+        font-size: 2rem;
+      }
+      .options-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
-<body class="getstarted-page">
+<body>
 
   <header class="simple-header">
-    <div class="container">
+    <div class="header-content">
       <div class="logo">MindSpace Kenya</div>
       <a href="login.html" class="text-link">Already have an account? Log in</a>
     </div>
@@ -82,10 +337,10 @@
 
   <main class="getstarted-container">
     <div class="progress-container">
+      <p class="progress-text">Step <span id="currentStep">1</span> of <span id="totalSteps">7</span></p>
       <div class="progress-bar">
         <div class="progress-fill" id="progressFill"></div>
       </div>
-      <p><span id="currentStep">1</span> of 6</p>
     </div>
 
     <div class="question-card">
@@ -94,162 +349,281 @@
         <h1>Let's find the right therapist for you</h1>
         <p class="subtitle">First, what should we call you?</p>
         <input type="text" id="userNameInput" placeholder="e.g. Aisha Mwangi" class="big-input" autofocus>
-        <button onclick="saveNameAndNext()" class="primary-btn">Continue</button>
+        <div class="error-message" id="nameError">Please enter your name</div>
+        <button onclick="nextStep(2)" class="primary-btn">Continue</button>
       </div>
 
       <!-- STEP 2: Concerns -->
       <div id="step2" class="step">
-        <h1>What's bringing you here today?</h1>
-        <p class="subtitle">Select all that apply</p>
+        <h1>What brings you here today?</h1>
+        <p class="subtitle">Select all that apply (you can choose multiple)</p>
         <div class="options-grid">
-          <label><input type="checkbox" value="Stress & Anxiety"> Stress & Anxiety</label>
-          <label><input type="checkbox" value="Depression"> Depression</label>
-          <label><input type="checkbox" value="Relationships"> Relationships</label>
-          <label><input type="checkbox" value="Family Conflict"> Family Conflict</label>
-          <label><input type="checkbox" value="Grief"> Grief & Loss</label>
-          <label><input type="checkbox" value="Trauma"> Trauma</label>
-          <label><input type="checkbox" value="Self-esteem"> Self-esteem</label>
-          <label><input type="checkbox" value="Work Stress"> Work Stress</label>
+          <div class="option-checkbox">
+            <input type="checkbox" id="concern1" value="Stress & Anxiety">
+            <label for="concern1">Stress & Anxiety</label>
+          </div>
+          <div class="option-checkbox">
+            <input type="checkbox" id="concern2" value="Depression">
+            <label for="concern2">Depression</label>
+          </div>
+          <div class="option-checkbox">
+            <input type="checkbox" id="concern3" value="Relationships">
+            <label for="concern3">Relationships</label>
+          </div>
+          <div class="option-checkbox">
+            <input type="checkbox" id="concern4" value="Family Conflict">
+            <label for="concern4">Family Conflict</label>
+          </div>
+          <div class="option-checkbox">
+            <input type="checkbox" id="concern5" value="Grief & Loss">
+            <label for="concern5">Grief & Loss</label>
+          </div>
+          <div class="option-checkbox">
+            <input type="checkbox" id="concern6" value="Trauma">
+            <label for="concern6">Trauma</label>
+          </div>
+          <div class="option-checkbox">
+            <input type="checkbox" id="concern7" value="Self-esteem">
+            <label for="concern7">Self-esteem</label>
+          </div>
+          <div class="option-checkbox">
+            <input type="checkbox" id="concern8" value="Work Stress">
+            <label for="concern8">Work Stress</label>
+          </div>
         </div>
+        <div class="error-message" id="concernsError">Please select at least one concern</div>
         <button onclick="nextStep(3)" class="primary-btn">Continue</button>
       </div>
 
-      <!-- STEP 3: Therapy Before (NOW SUPER VISIBLE) -->
+      <!-- STEP 3: Therapy Experience -->
       <div id="step3" class="step">
-        <h1>Have you ever attended therapy before?</h1>
-        <p class="subtitle">This helps us match you better</p>
+        <h1>Have you attended therapy before?</h1>
+        <p class="subtitle">This helps us match you with the right therapist</p>
         <div class="big-options">
-          <button onclick="selectOption(this); setAnswer('therapyBefore', 'Yes'); nextStep(4)" class="option-btn">Yes</button>
-          <button onclick="selectOption(this); setAnswer('therapyBefore', 'No'); nextStep(4)" class="option-btn">No</button>
-          <button onclick="selectOption(this); setAnswer('therapyBefore', 'Not sure'); nextStep(4)" class="option-btn">Not sure</button>
+          <button onclick="selectOption(this, 'Yes'); nextStep(4)" class="option-btn">Yes, I have</button>
+          <button onclick="selectOption(this, 'No'); nextStep(4)" class="option-btn">No, this is my first time</button>
+          <button onclick="selectOption(this, 'Prefer not to say'); nextStep(4)" class="option-btn">Prefer not to say</button>
         </div>
       </div>
 
-      <!-- STEP 4: Gender (NOW SUPER VISIBLE) -->
+      <!-- STEP 4: Gender -->
       <div id="step4" class="step">
-        <h1>Which describes you best?</h1>
+        <h1>How do you identify?</h1>
         <p class="subtitle">We respect all identities</p>
         <div class="big-options">
-          <button onclick="selectOption(this); setAnswer('gender', 'Male'); nextStep(5)" class="option-btn">Male</button>
-          <button onclick="selectOption(this); setAnswer('gender', 'Female'); nextStep(5)" class="option-btn">Female</button>
-          <button onclick="selectOption(this); setAnswer('gender', 'Non-binary'); nextStep(5)" class="option-btn">Non-binary</button>
-          <button onclick="selectOption(this); setAnswer('gender', 'Prefer not to say'); nextStep(5)" class="option-btn">Prefer not to say</button>
+          <button onclick="selectOption(this, 'Male'); nextStep(5)" class="option-btn">Male</button>
+          <button onclick="selectOption(this, 'Female'); nextStep(5)" class="option-btn">Female</button>
+          <button onclick="selectOption(this, 'Non-binary'); nextStep(5)" class="option-btn">Non-binary</button>
+          <button onclick="selectOption(this, 'Prefer not to say'); nextStep(5)" class="option-btn">Prefer not to say</button>
         </div>
       </div>
 
-      <!-- STEP 5: Phone -->
+      <!-- STEP 5: Phone Number -->
       <div id="step5" class="step">
         <h1>What's your phone number?</h1>
-        <p class="subtitle">We’ll send a confirmation code (Kenya only)</p>
+        <p class="subtitle">We'll use this to create your account (Kenyan numbers only)</p>
         <input type="tel" id="phoneInput" placeholder="0712345678" class="big-input" maxlength="10">
-        <button onclick="nextStep(6)" class="primary-btn">Send Code</button>
+        <div class="error-message" id="phoneError">Please enter a valid Kenyan phone number (07xxxxxxxx)</div>
+        <button onclick="nextStep(6)" class="primary-btn">Continue</button>
       </div>
 
-      <!-- STEP 6: Password -->
+      <!-- STEP 6: Email (Optional) -->
       <div id="step6" class="step">
+        <h1>What's your email address?</h1>
+        <p class="subtitle">We'll send appointment reminders and updates here</p>
+        <input type="email" id="emailInput" placeholder="you@example.com" class="big-input">
+        <div class="error-message" id="emailError">Please enter a valid email address</div>
+        <button onclick="nextStep(7)" class="primary-btn">Continue</button>
+      </div>
+
+      <!-- STEP 7: Password -->
+      <div id="step7" class="step">
         <h1>You're almost there!</h1>
-        <p class="subtitle">Create a secure password</p>
-        <input type="password" id="passwordInput" placeholder="Choose a strong password" class="big-input">
-        <input type="password" id="confirmPassword" placeholder="Confirm your password" class="big-input" style="margin-top:16px;">
-        <button onclick="completeSignup()" class="primary-btn">Create My Account</button>
-        <p class="secure-note">By continuing, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a></p>
+        <p class="subtitle">Create a secure password for your account</p>
+        <input type="password" id="passwordInput" placeholder="Choose a strong password (min 6 characters)" class="big-input">
+        <input type="password" id="confirmPassword" placeholder="Confirm your password" class="big-input">
+        <div class="error-message" id="passwordError">Passwords must match and be at least 6 characters</div>
+        <button onclick="completeSignup()" class="primary-btn" id="signupBtn">Create My Account</button>
+        <p class="secure-note">By continuing, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></p>
       </div>
     </div>
 
     <div class="trust-badges">
-      <p>Trusted by thousands of Kenyans</p>
+      <p>Trusted by thousands of Kenyans seeking mental wellness</p>
       <div class="badges">
-        <span>100% Confidential</span>
-        <span>Licensed Therapists</span>
-        <span>Affordable Plans</span>
+        <span>🔒 100% Confidential</span>
+        <span>✓ Licensed Therapists</span>
+        <span>💰 Affordable Plans</span>
       </div>
     </div>
   </main>
 
   <script>
-    let assessmentData = {
-      name: '', concerns: [], therapyBefore: '', gender: '', phone: '', password: ''
+    const assessmentData = {
+      name: '',
+      concerns: [],
+      therapyBefore: '',
+      gender: '',
+      phone: '',
+      email: '',
+      password: ''
     };
-    let currentStep = 1;
-    const totalSteps = 6;
 
-    function saveNameAndNext() {
-      const name = document.getElementById('userNameInput').value.trim();
-      if (!name) return alert('Please enter your name');
-      assessmentData.name = name;
-      nextStep(2);
+    let currentStepNum = 1;
+    const totalSteps = 7;
+
+    function updateProgress() {
+      document.getElementById('currentStep').textContent = currentStepNum;
+      document.getElementById('totalSteps').textContent = totalSteps;
+      const percentage = (currentStepNum / totalSteps) * 100;
+      document.getElementById('progressFill').style.width = percentage + '%';
+    }
+
+    function showError(errorId, show = true) {
+      const errorEl = document.getElementById(errorId);
+      if (show) {
+        errorEl.classList.add('show');
+      } else {
+        errorEl.classList.remove('show');
+      }
     }
 
     function nextStep(step) {
-      if (currentStep === 2) {
-        const checked = document.querySelectorAll('#step2 input[type="checkbox"]:checked');
-        assessmentData.concerns = Array.from(checked).map(c => c.value);
-        if (assessmentData.concerns.length === 0) return alert('Please select at least one concern');
+      // Validation for current step
+      if (currentStepNum === 1) {
+        const name = document.getElementById('userNameInput').value.trim();
+        if (!name) {
+          showError('nameError');
+          return;
+        }
+        assessmentData.name = name;
+        showError('nameError', false);
       }
-      if (currentStep === 5) {
+
+      if (currentStepNum === 2) {
+        const checkboxes = document.querySelectorAll('.option-checkbox input[type="checkbox"]:checked');
+        assessmentData.concerns = Array.from(checkboxes).map(cb => cb.value);
+        if (assessmentData.concerns.length === 0) {
+          showError('concernsError');
+          return;
+        }
+        showError('concernsError', false);
+      }
+
+      if (currentStepNum === 5) {
         const phone = document.getElementById('phoneInput').value.trim();
-        if (!/^07\d{8}$/.test(phone)) return alert('Please enter a valid Kenyan number (07xxxxxxxx)');
+        if (!/^07\d{8}$/.test(phone)) {
+          showError('phoneError');
+          return;
+        }
         assessmentData.phone = phone;
+        showError('phoneError', false);
       }
 
-      document.getElementById(`step${currentStep}`).classList.remove('active');
+      if (currentStepNum === 6) {
+        const email = document.getElementById('emailInput').value.trim();
+        if (email && !/\S+@\S+\.\S+/.test(email)) {
+          showError('emailError');
+          return;
+        }
+        assessmentData.email = email || assessmentData.phone + '@mindspace.co.ke';
+        showError('emailError', false);
+      }
+
+      // Move to next step
+      document.getElementById(`step${currentStepNum}`).classList.remove('active');
       document.getElementById(`step${step}`).classList.add('active');
-      currentStep = step;
+      currentStepNum = step;
       updateProgress();
+
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function setAnswer(key, value) {
-      assessmentData[key] = value;
-    }
-
-    function selectOption(btn) {
-      // Visual feedback: remove selected from siblings
+    function selectOption(btn, value) {
       const parent = btn.parentElement;
       parent.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
+
+      if (currentStepNum === 3) {
+        assessmentData.therapyBefore = value;
+      } else if (currentStepNum === 4) {
+        assessmentData.gender = value;
+      }
     }
 
-    function updateProgress() {
-      document.getElementById('currentStep').textContent = currentStep;
-      document.getElementById('progressFill').style.width = (currentStep / totalSteps) * 100 + '%';
-    }
-
-    function completeSignup() {
+    async function completeSignup() {
       const password = document.getElementById('passwordInput').value;
       const confirm = document.getElementById('confirmPassword').value;
-      if (password.length < 6) return alert('Password must be at least 6 characters');
-      if (password !== confirm) return alert('Passwords do not match');
+
+      if (password.length < 6) {
+        showError('passwordError');
+        document.getElementById('passwordError').textContent = 'Password must be at least 6 characters';
+        return;
+      }
+
+      if (password !== confirm) {
+        showError('passwordError');
+        document.getElementById('passwordError').textContent = 'Passwords do not match';
+        return;
+      }
 
       assessmentData.password = password;
+      showError('passwordError', false);
 
+      // Disable button
+      const signupBtn = document.getElementById('signupBtn');
+      signupBtn.disabled = true;
+      signupBtn.textContent = 'Creating your account...';
+
+      // Save to localStorage (in production, this would be an API call)
       let users = JSON.parse(localStorage.getItem('mindspace_users') || '[]');
-      const email = assessmentData.phone + '@mindspace.co.ke';
-
-      if (users.some(u => u.email === email)) {
-        alert('This phone number is already registered!');
+      
+      // Check if user already exists
+      if (users.some(u => u.email === assessmentData.email || u.phone === assessmentData.phone)) {
+        alert('An account with this email or phone already exists. Please login instead.');
         window.location.href = 'login.html';
         return;
       }
 
-      users.push({
+      const newUser = {
         name: assessmentData.name,
-        email: email,
+        email: assessmentData.email,
         password: assessmentData.password,
         phone: assessmentData.phone,
         concerns: assessmentData.concerns,
-        verified: true
-      });
+        therapyBefore: assessmentData.therapyBefore,
+        gender: assessmentData.gender,
+        verified: true,
+        createdAt: new Date().toISOString()
+      };
 
+      users.push(newUser);
       localStorage.setItem('mindspace_users', JSON.stringify(users));
-      localStorage.setItem('mindspace_user', JSON.stringify({ name: assessmentData.name, email }));
+      localStorage.setItem('mindspace_user', JSON.stringify({
+        name: newUser.name,
+        email: newUser.email,
+        phone: newUser.phone
+      }));
       localStorage.setItem('user_assessment', JSON.stringify(assessmentData));
 
-      alert(`Asante ${assessmentData.name}! We're matching you with a therapist now...`);
-      window.location.href = 'dashboard.html';
+      // Simulate API delay
+      setTimeout(() => {
+        alert(`Welcome to MindSpace Kenya, ${assessmentData.name}!\n\nWe're matching you with the perfect therapist based on your needs...`);
+        window.location.href = 'dashboard.html';
+      }, 1500);
     }
 
-    // Start
+    // Initialize
     updateProgress();
+    document.getElementById('userNameInput').focus();
+
+    // Clear errors on input
+    document.getElementById('userNameInput').addEventListener('input', () => showError('nameError', false));
+    document.getElementById('phoneInput').addEventListener('input', () => showError('phoneError', false));
+    document.getElementById('emailInput').addEventListener('input', () => showError('emailError', false));
+    document.getElementById('passwordInput').addEventListener('input', () => showError('passwordError', false));
+    document.getElementById('confirmPassword').addEventListener('input', () => showError('passwordError', false));
   </script>
 </body>
 </html>
