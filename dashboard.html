@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindSpace Kenya - Mental Health Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/umd/lucide.min.js"></script>
+</head>
+<body>
+    <div id="app" class="min-h-screen bg-gradient-to-br from-emerald-900 via-emerald-800 to-emerald-700">
+        <!-- Header -->
+        <header class="bg-emerald-900/80 backdrop-blur-sm border-b border-emerald-700 sticky top-0 z-40">
+            <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <i data-lucide="heart" class="w-8 h-8 text-emerald-400"></i>
+                    <h1 class="text-2xl font-bold text-white">MindSpace Kenya</h1>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button class="text-emerald-100 hover:text-white transition-colors">Dashboard</button>
+                    <button class="text-emerald-100 hover:text-white transition-colors">Community</button>
+                    <div class="flex items-center gap-3 cursor-pointer" id="profileTrigger">
+                        <img id="headerProfilePic" src="" alt="Profile" class="w-10 h-10 rounded-full border-2 border-emerald-400">
+                        <span id="headerUserName" class="text-white font-medium"></span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="max-w-7xl mx-auto px-4 py-8">
+            <!-- Welcome Section -->
+            <div class="bg-white/95 rounded-2xl p-8 mb-6 shadow-xl">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h2 id="welcomeText" class="text-3xl font-bold text-emerald-900 mb-2"></h2>
+                        <p class="text-gray-600">How are you feeling today?</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-sm text-gray-500">Member since</p>
+                        <p id="joinDate" class="font-semibold text-emerald-700"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                <div class="bg-white/95 rounded-xl p-6 shadow-lg">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-sm">Sessions</p>
+                            <p id="sessionsCount" class="text-3xl font-bold text-emerald-700"></p>
+                        </div>
+                        <i data-lucide="calendar" class="w-10 h-10 text-emerald-500"></i>
+                    </div>
+                </div>
+                <div class="bg-white/95 rounded-xl p-6 shadow-lg">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-sm">Mood Score</p>
+                            <p class="text-3xl font-bold text-emerald-700">4.3</p>
+                        </div>
+                        <i data-lucide="trending-up" class="w-10 h-10 text-emerald-500"></i>
+                    </div>
+                </div>
+                <div class="bg-white/95 rounded-xl p-6 shadow-lg">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-sm">Streak</p>
+                            <p class="text-3xl font-bold text-emerald-700">7d</p>
+                        </div>
+                        <i data-lucide="activity" class="w-10 h-10 text-emerald-500"></i>
+                    </div>
+                </div>
+                <div class="bg-white/95 rounded-xl p-6 shadow-lg">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-sm">Journal</p>
+                            <p class="text-3xl font-bold text-emerald-700">24</p>
+                        </div>
+                        <i data-lucide="book-open" class="w-10 h-10 text-emerald-500"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Left Column -->
+                <div class="lg:col-span-2 space-y-6">
+                    <!-- Appointments -->
+                    <div class="bg-white/95 rounded-2xl p-6 shadow-xl">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-xl font-bold text-emerald-900">Upcoming Sessions</h3>
+                            <button class="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors text-sm">
+                                Book New
+                            </button>
+                        </div>
+                        <div id="appointmentsList"></div>
+                    </div>
+
+                    <!-- Mood Chart -->
+                    <div class="bg-white/95 rounded-2xl p-6 shadow-xl">
+                        <h3 class="text-xl font-bold text-emerald-900 mb-4">Your Mood This Week</h3>
+                        <div id="moodChart" class="flex items-end justify-between h-48"></div>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="space-y-6">
+                    <!-- User Profile Card -->
+                    <div class="bg-white/95 rounded-2xl p-6 shadow-xl text-center">
+                        <img id="profilePic" src="" alt="Profile" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-emerald-400">
+                        <h3 id="profileName" class="text-xl font-bold text-emerald-900"></h3>
+                        <p id="profileEmail" class="text-gray-600 text-sm mb-4"></p>
+                        <button id="editProfileBtn" class="bg-emerald-600 text-white px-6 py-2 rounded-lg hover:bg-emerald-700 transition-colors w-full">
+                            Edit Profile
+                        </button>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="bg-white/95 rounded-2xl p-6 shadow-xl">
+                        <h3 class="text-lg font-bold text-emerald-900 mb-4">Quick Actions</h3>
+                        <div class="space-y-3">
+                            <button class="w-full bg-emerald-50 text-emerald-700 py-3 rounded-lg hover:bg-emerald-100 transition-colors flex items-center justify-center gap-2">
+                                <i data-lucide="calendar" class="w-5 h-5"></i>
+                                Book Session
+                            </button>
+                            <button class="w-full bg-emerald-50 text-emerald-700 py-3 rounded-lg hover:bg-emerald-100 transition-colors flex items-center justify-center gap-2">
+                                <i data-lucide="users" class="w-5 h-5"></i>
+                                Community
+                            </button>
+                            <button id="aiChatBtn" class="w-full bg-emerald-50 text-emerald-700 py-3 rounded-lg hover:bg-emerald-100 transition-colors flex items-center justify-center gap-2">
+                                <i data-lucide="brain" class="w-5 h-5"></i>
+                                AI Assistant
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Crisis Support -->
+                    <div class="bg-red-50 border-2 border-red-300 rounded-2xl p-6 shadow-xl">
+                        <h3 class="text-lg font-bold text-red-700 mb-2">24/7 Crisis Support</h3>
+                        <p class="text-sm text-red-600 mb-3">If you're in immediate danger, please call:</p>
+                        <a href="tel:999" class="block bg-red-600 text-white text-center py-2 rounded-lg hover:bg-red-700 transition-colors font-bold">
+                            📞 Emergency: 999
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-emerald-900 text-white mt-12 py-8">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-6">
+                    <div>
+                        <h4 class="font-bold text-lg mb-3">Contact Us</h4>
+                        <div class="space-y-2 text-emerald-200">
+                            <p class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4"></i> +254 712 345 678</p>
+                            <p class="flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i> support@mindspace.co.ke</p>
+                            <p class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4"></i> Nairobi, Kenya</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-lg mb-3">Follow Us</h4>
+                        <div class="flex gap-4">
+                            <a href="#" class="w-10 h-10 bg-emerald-700 rounded-full flex items-center justify-center hover:bg-emerald-600 transition-colors">f</a>
+                            <a href="#" class="w-10 h-10 bg-emerald-700 rounded-full flex items-center justify-center hover:bg-emerald-600 transition-colors">X</a>
+                            <a href="#" class="w-10 h-10 bg-emerald-700 rounded-full flex items-center justify-center hover:bg-emerald-600 transition-colors">in</a>
+                            <a href="#" class="w-10 h-10 bg-emerald-700 rounded-full flex items-center justify-center hover:bg-emerald-600 transition-colors">IG</a>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-lg mb-3">Quick Links</h4>
+                        <div class="space-y-2 text-emerald-200">
+                            <p><a href="#" class="hover:text-white">Privacy Policy</a></p>
+                            <p><a href="#" class="hover:text-white">Terms of Service</a></p>
+                            <p><a href="#" class="hover:text-white">FAQs</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="border-t border-emerald-700 pt-4 text-center text-emerald-300">
+                    <p>&copy; <span id="currentYear"></span> MindSpace Kenya. All rights reserved. Built with ❤️ for mental health awareness in Kenya.</p>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Edit Profile Modal -->
+        <div id="editModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 hidden">
+            <div class="bg-white rounded-2xl p-8 max-w-md w-full max-h-[90vh] overflow-y-auto">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-emerald-900">Edit Profile</h2>
+                    <button id="closeModal" class="text-gray-500 hover:text-gray-700">
+                        <i data-lucide="x" class="w-6 h-6"></i>
+                    </button>
+                </div>
+                
+                <div class="text-center mb-6">
+                    <img id="modalProfilePic" src="" alt="Profile" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-emerald-400">
+                    <p class="text-sm text-gray-600 mb-3">Choose a profile picture:</p>
+                    <div id="profilePicOptions" class="flex gap-3 justify-center flex-wrap"></div>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                        <input type="text" id="inputName" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                        <input type="email" id="inputEmail" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                        <input type="tel" id="inputPhone" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
+                    </div>
+                </div>
+
+                <button id="saveProfile" class="w-full bg-emerald-600 text-white py-3 rounded-lg hover:bg-emerald-700 transition-colors mt-6 font-semibold">
+                    Save Changes
+                </button>
+            </div>
+        </div>
+
+        <!-- AI Chat Popup -->
+        <div id="aiChatPopup" class="fixed bottom-4 right-4 w-96 h-[500px] bg-white rounded-2xl shadow-2xl flex-col z-50 border-2 border-emerald-500 hidden">
+            <div class="bg-emerald-600 text-white p-4 rounded-t-2xl flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="brain" class="w-6 h-6"></i>
+                    <h3 class="font-bold">AI Support Assistant</h3>
+                </div>
+                <button id="closeChatBtn" class="hover:bg-emerald-700 p-1 rounded">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            
+            <div id="chatMessages" class="flex-1 overflow-y-auto p-4 bg-gray-50"></div>
+            
+            <div class="p-4 border-t border-gray-200">
+                <div class="flex gap-2">
+                    <input
+                        type="text"
+                        id="chatInput"
+                        placeholder="Type your message..."
+                        class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                    >
+                    <button id="sendMessageBtn" class="bg-emerald-600 text-white p-2 rounded-lg hover:bg-emerald-700 transition-colors">
+                        <i data-lucide="send" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Chat Trigger Button -->
+        <button id="aiChatTrigger" class="fixed bottom-6 right-6 bg-emerald-600 text-white p-4 rounded-full shadow-2xl hover:bg-emerald-700 transition-all hover:scale-110 z-40">
+            <i data-lucide="message-circle" class="w-6 h-6"></i>
+        </button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
